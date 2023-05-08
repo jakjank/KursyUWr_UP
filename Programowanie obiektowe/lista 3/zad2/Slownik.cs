@@ -1,12 +1,3 @@
-/*
-Jakub Jankowski
-wektort.cs
-Lista 2: zadanie 2
-Windows 11 Visual Studio Code
-dotnet 7.0.201
-definicja klasy słownik
-*/
-
 namespace zad2
 {
     class MyDictionary<K , V>
