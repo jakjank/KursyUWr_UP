@@ -1,3 +1,5 @@
+//TEN PROJEKT NIE JEST SKONCZONY
+
 #include <iostream>
 #include "tabbit.hpp"
 
