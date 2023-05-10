@@ -1,3 +1,5 @@
+//TEN PROJEKT NIE JEST SKONCZONY
+
 #ifndef TABBIT_HPP
 #define TABBIT_HPP
 #include <iostream>
