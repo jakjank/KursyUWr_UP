@@ -1,0 +1,11 @@
+Wspomaganie organizacji wynajmu mieszkań
+Opis:
+Projekt ma na celu ułatwienie obsługi i uporządowanie informacji na temat aktualnie wynajmowanych mieszkań.
+Ma mieć formę aplikacji okienkowej, która pozwala na sprawdzenie i zaktualizowanie danych.
+Dostępne mają być w nim takie opcje jak:
+- Podgląd listy wynajmowanych mieszkań,
+- Dodawanie nowych mieszkań,
+- Wprowadzanie kosztów utrzymyania mieszkań,
+- Sprawdzanie i aktualizowanie informacji na temat najemców,
+- Sprawdzanie czy mieszkanie/pokój zostało opłacone za aktualny miesiąc.
+Program ma obsługiwać wynajem mieszkań jako całości oraz sytuację gdy mieszkanie jest wynajmowane na pokoje.
