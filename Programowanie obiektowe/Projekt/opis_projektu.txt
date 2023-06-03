@@ -1,0 +1,10 @@
+Autor: Jakub Jankowski
+Tytuł projektu: System obsługi wynajmu długoterminowego mieszkań
+Beneficjent: jakjank - github
+
+
+Opis:
+Projekt ma na celu ułatwienie obsługi i uporządowanie informacji na temat aktualnie wynajmowanych mieszkań.
+Ma mieć formę aplikacji okienkowej, która pozwala na spradzenie i zaktualizowanie danych 
+(np. mieszkań, kosztów ich utrzymania, lokatorów, czy sprawdzenie czy mieszkanie lub pokój został opłacony za
+aktualny miesiąc)
