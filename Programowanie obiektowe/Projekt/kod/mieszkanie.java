@@ -15,13 +15,20 @@ class Mieszkanie implements Serializable
     String opis;
     //? dokumenty
 
-    public Mieszkanie(String nazwa)
+    public Mieszkanie(String s)
+    {
+        nazwa = s;
+    }
+
+    public void ustaw_nazwe(String nazwa)
     {
         this.nazwa = nazwa;
     }
 
     public String daj_nazwe()
     {
-        return  nazwa;
+        return nazwa;
     }
+    public void wyswietl_okno() {}
 }
+

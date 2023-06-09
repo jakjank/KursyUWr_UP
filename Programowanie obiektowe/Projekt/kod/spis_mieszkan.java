@@ -28,16 +28,21 @@ class Spis_Mieszkan implements Serializable
         }
         catch(IOException ex)
         {
-            System.out.println("deserializacja nieudana");
+            //System.out.println("deserializacja nieudana1");
         }
         catch(ClassNotFoundException ex)
         {
-            System.out.println("deserializacja nieudana");
+            //System.out.println("deserializacja nieudana2");
         }
     }
-    public void dodaj_mieszkanie(String nazwa_nowego_mieszkania)
+    public void dodaj_mieszkanie_c(String nazwa_nowego_mieszkania)
     {
-        lista_mieszkan.add(new Mieszkanie(nazwa_nowego_mieszkania));
+        lista_mieszkan.add(new M_calosc(nazwa_nowego_mieszkania));
+    }
+    
+    public void dodaj_mieszkanie_p(String nazwa_nowego_mieszkania)
+    {
+        lista_mieszkan.add(new M_na_pokoje(nazwa_nowego_mieszkania));
     }
 
     public void odczytaj_z_pliku(String nazwa_pliku) throws ClassNotFoundException, IOException
@@ -74,39 +79,40 @@ class Spis_Mieszkan implements Serializable
     }
 }
 
+class Para_p_m
+    {
+    JButton przycisk;
+    Mieszkanie mieszkanie;
+
+    public Para_p_m(JButton p, Mieszkanie m)
+    {
+        przycisk = p;
+        mieszkanie = m;
+    }
+    public JButton daj_p()
+    {
+        return przycisk;
+    }
+    public Mieszkanie daj_m()
+    {
+        return mieszkanie;
+    }
+    public void ustaw_p(JButton p)
+    {
+            przycisk = p;
+    }
+    public void ustaw_m(Mieszkanie m)
+    {
+        mieszkanie = m;
+    }
+}
 
 class Spis_Mieszkan_Swing extends JFrame implements ActionListener
 {   
-    class Para_p_m
-    {
-        JButton przycisk;
-        Mieszkanie mieszkanie;
-
-        public Para_p_m(JButton p, Mieszkanie m)
-        {
-            przycisk = p;
-            mieszkanie = m;
-        }
-        public JButton daj_p()
-        {
-            return przycisk;
-        }
-        public Mieszkanie daj_m()
-        {
-            return mieszkanie;
-        }
-        public void ustaw_p(JButton p)
-        {
-            przycisk = p;
-        }
-        public void ustaw_m(Mieszkanie m)
-        {
-            mieszkanie = m;
-        }
-    }
     Spis_Mieszkan spis_mieszkan;
     JFrame okno;
     JButton dodaj_mieszkanie;
+    JButton dodaj_mieszkanie_na_pokoje;
     ArrayList<Para_p_m> lista_mieszkan;
     
     public Spis_Mieszkan_Swing(Spis_Mieszkan spis_m)
@@ -114,6 +120,8 @@ class Spis_Mieszkan_Swing extends JFrame implements ActionListener
         lista_mieszkan = new ArrayList<Para_p_m>();
         dodaj_mieszkanie = new JButton("dodaj mieszkanie");
         dodaj_mieszkanie.addActionListener(this);
+        dodaj_mieszkanie_na_pokoje = new JButton("dodaj mieszknaie na pokoje");
+        dodaj_mieszkanie_na_pokoje.addActionListener(this);
 
         spis_mieszkan = spis_m;
         okno = new JFrame("Mieszkania");
@@ -126,7 +134,7 @@ class Spis_Mieszkan_Swing extends JFrame implements ActionListener
         }
 
         Container kontener = okno.getContentPane();
-        GridLayout rozklad = new GridLayout(lista_mieszkan.size() + 1  , 1);
+        GridLayout rozklad = new GridLayout(lista_mieszkan.size() + 2  , 1);
         kontener.setLayout(rozklad);
 
         for(Para_p_m para : lista_mieszkan)
@@ -134,6 +142,7 @@ class Spis_Mieszkan_Swing extends JFrame implements ActionListener
             kontener.add(para.daj_p());
         }
         kontener.add(dodaj_mieszkanie);
+        kontener.add(dodaj_mieszkanie_na_pokoje);
 
         okno.pack();
         okno.setVisible(true);
@@ -144,11 +153,24 @@ class Spis_Mieszkan_Swing extends JFrame implements ActionListener
         
         if(ktory_przycisk == dodaj_mieszkanie)
         {
-            System.out.println("to byl dodaj");
+            new Dodaj_m_calosc_Swing(spis_mieszkan);     
         }
         else
         {
-            System.out.println("to nie byl dodaj");
+            if(ktory_przycisk == dodaj_mieszkanie_na_pokoje)
+            {
+                new Dodaj_m_na_pokoje_Swing(spis_mieszkan);
+            }
+            else
+            {
+                for(Para_p_m para : lista_mieszkan)
+                {
+                    if(ktory_przycisk == para.daj_p())
+                    {
+                        para.daj_m().wyswietl_okno();
+                    }
+                }
+            }
         }
     }
 
