@@ -37,12 +37,12 @@ class Spis_Mieszkan implements Serializable
     }
     public void dodaj_mieszkanie_c(String nazwa_nowego_mieszkania)
     {
-        lista_mieszkan.add(new M_calosc(nazwa_nowego_mieszkania));
+        lista_mieszkan.add(new M_calosc(nazwa_nowego_mieszkania, this));
     }
     
     public void dodaj_mieszkanie_p(String nazwa_nowego_mieszkania)
     {
-        lista_mieszkan.add(new M_na_pokoje(nazwa_nowego_mieszkania));
+        lista_mieszkan.add(new M_na_pokoje(nazwa_nowego_mieszkania, this));
     }
 
     public void odczytaj_z_pliku(String nazwa_pliku) throws ClassNotFoundException, IOException
@@ -145,6 +145,7 @@ class Spis_Mieszkan_Swing extends JFrame implements ActionListener
         kontener.add(dodaj_mieszkanie_na_pokoje);
 
         okno.pack();
+        okno.setSize(300, (lista_mieszkan.size() + 2)*32 + 40);
         okno.setVisible(true);
     }
 
@@ -154,20 +155,24 @@ class Spis_Mieszkan_Swing extends JFrame implements ActionListener
         if(ktory_przycisk == dodaj_mieszkanie)
         {
             new Dodaj_m_calosc_Swing(spis_mieszkan);     
+            okno.dispose();
         }
         else
         {
             if(ktory_przycisk == dodaj_mieszkanie_na_pokoje)
             {
                 new Dodaj_m_na_pokoje_Swing(spis_mieszkan);
+                okno.dispose();
             }
             else
             {
                 for(Para_p_m para : lista_mieszkan)
                 {
                     if(ktory_przycisk == para.daj_p())
-                    {
-                        para.daj_m().wyswietl_okno();
+                    {   
+                        // do wyświetl okno przekazujemy spis mieszkań,
+                        // aby w razie modyfikacji móc go zapisać.
+                        para.daj_m().wyswietl_okno(spis_mieszkan);
                     }
                 }
             }

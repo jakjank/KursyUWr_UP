@@ -14,11 +14,11 @@ import java.util.ArrayList;
 
 class M_na_pokoje extends Mieszkanie
 {
-    ArrayList<M_calosc> pokoje; 
+    ArrayList<M_calosc> pokoje;
 
-    public M_na_pokoje(String nazwa)
+    public M_na_pokoje(String nazwa, Spis_Mieszkan s_m)
     {
-        super(nazwa);
+        super(nazwa, s_m);
         pokoje = new ArrayList<M_calosc>(0);
     }
 
@@ -29,11 +29,13 @@ class M_na_pokoje extends Mieszkanie
 
     public void dodaj_pokoj(String nazwa)
     {
-        pokoje.add(new M_calosc(nazwa));
+        pokoje.add(new M_calosc(nazwa, spis_mieszkan));
+        this.zapisz();
+        System.out.println("mieszkanie ma pokoi: " + pokoje.size());
     }
 
     @Override
-    public void wyswietl_okno()
+    public void wyswietl_okno(Spis_Mieszkan spis_mieszkan)
     {
         new M_na_pokoje_Swing(this);
     }
@@ -83,6 +85,7 @@ class Dodaj_m_na_pokoje_Swing extends JFrame implements ActionListener
          System.out.println("nie udalo sie zapisac spisu mieszkan");
       }
       okno.dispose();
+      new Spis_Mieszkan_Swing(spis_mieszkan);
    }  
 }
 
@@ -97,7 +100,7 @@ class Dodaj_pokoj_Swing extends JFrame implements ActionListener
    Dodaj_pokoj_Swing(M_na_pokoje m)
    {
       okno = new JFrame("Dodaj mieszkania");
-      okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      okno.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
       this.mieszkanie = m;
 
@@ -122,6 +125,7 @@ class Dodaj_pokoj_Swing extends JFrame implements ActionListener
    public void actionPerformed(ActionEvent e) {
       mieszkanie.dodaj_pokoj(nazwa.getText());
       okno.dispose();
+      new M_na_pokoje_Swing(mieszkanie);
    }  
 }
 
@@ -130,18 +134,19 @@ class M_na_pokoje_Swing extends JFrame implements ActionListener
     M_na_pokoje mieszkanie;
     JFrame okno;
     JButton dodaj_pokoj;
-    List<Para_p_m> lista_pokoi;
+    ArrayList<Para_p_m> lista_pokoi;
 
     M_na_pokoje_Swing(M_na_pokoje m)
     {
         okno = new JFrame("Mieszkanie na pokoje");
-        okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        okno.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         this.mieszkanie = m;
 
         dodaj_pokoj = new JButton("dodaj pokoj");
         dodaj_pokoj.addActionListener(this);
-
+        
+        lista_pokoi = new ArrayList<Para_p_m>(0);
         for(M_calosc m_c : mieszkanie.daj_liste_pokoi())
         {
             lista_pokoi.add(new Para_p_m(new JButton(m_c.daj_nazwe()), m_c));
@@ -159,8 +164,10 @@ class M_na_pokoje_Swing extends JFrame implements ActionListener
         kontener.add(dodaj_pokoj);
 
         okno.pack();
+        okno.setSize(300, (lista_pokoi.size() + 1) * 32 + 40);
         okno.setVisible(true);
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -169,6 +176,15 @@ class M_na_pokoje_Swing extends JFrame implements ActionListener
         if(ktory_przycisk == dodaj_pokoj)
         {
             new Dodaj_pokoj_Swing(mieszkanie); 
+            okno.dispose();
+        }
+
+        for(Para_p_m para : lista_pokoi)
+        {
+            if(para.daj_p() == ktory_przycisk)
+            {
+                para.daj_m().wyswietl_okno(para.daj_m().spis_mieszkan);
+            }
         }
     }
 }
