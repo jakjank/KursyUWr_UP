@@ -1,5 +1,3 @@
-import java.io.Console;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -11,13 +9,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.List;
 
 class Spis_Mieszkan implements Serializable
 {
     ArrayList<Mieszkanie> lista_mieszkan;
-    int podatek_calosc;
-    // ? podsumowanie
+    //int podatek_calosc;
 
     public Spis_Mieszkan()
     {
@@ -28,11 +24,11 @@ class Spis_Mieszkan implements Serializable
         }
         catch(IOException ex)
         {
-            //System.out.println("deserializacja nieudana1");
+            System.out.println("deserializacja nieudana1");
         }
         catch(ClassNotFoundException ex)
         {
-            //System.out.println("deserializacja nieudana2");
+            System.out.println("deserializacja nieudana2");
         }
     }
     public void dodaj_mieszkanie_c(String nazwa_nowego_mieszkania)
@@ -113,6 +109,7 @@ class Spis_Mieszkan_Swing extends JFrame implements ActionListener
     JFrame okno;
     JButton dodaj_mieszkanie;
     JButton dodaj_mieszkanie_na_pokoje;
+    JButton usun_mieszkanie;
     ArrayList<Para_p_m> lista_mieszkan;
     
     public Spis_Mieszkan_Swing(Spis_Mieszkan spis_m)
@@ -122,6 +119,8 @@ class Spis_Mieszkan_Swing extends JFrame implements ActionListener
         dodaj_mieszkanie.addActionListener(this);
         dodaj_mieszkanie_na_pokoje = new JButton("dodaj mieszknaie na pokoje");
         dodaj_mieszkanie_na_pokoje.addActionListener(this);
+        usun_mieszkanie = new JButton("usun mieszkanie");
+        usun_mieszkanie.addActionListener(this);
 
         spis_mieszkan = spis_m;
         okno = new JFrame("Mieszkania");
@@ -130,11 +129,22 @@ class Spis_Mieszkan_Swing extends JFrame implements ActionListener
         for(Mieszkanie mieszkanie : spis_mieszkan.daj_liste_mieszkan())
         {
             lista_mieszkan.add(new Para_p_m(new JButton(mieszkanie.daj_nazwe()), mieszkanie));
-            lista_mieszkan.get(lista_mieszkan.size() - 1).daj_p().addActionListener(this); //?
+            lista_mieszkan.get(lista_mieszkan.size() - 1).daj_p().addActionListener(this);
+            lista_mieszkan.get(lista_mieszkan.size() - 1).daj_m().sprawdz_stan();
+            if(lista_mieszkan.get(lista_mieszkan.size() - 1).daj_m().czy_opoznione == true)
+            {
+                //lista_mieszkan.get(lista_mieszkan.size() - 1).daj_p().setBackground(Color.RED);
+                lista_mieszkan.get(lista_mieszkan.size() - 1).daj_p().setBackground(Color.RED);
+            }
+            else
+            {
+                //lista_mieszkan.get(lista_mieszkan.size() - 1).daj_p().setBackground(Color.RED);
+                lista_mieszkan.get(lista_mieszkan.size() - 1).daj_p().setBackground(Color.WHITE);
+            }
         }
 
         Container kontener = okno.getContentPane();
-        GridLayout rozklad = new GridLayout(lista_mieszkan.size() + 2  , 1);
+        GridLayout rozklad = new GridLayout(lista_mieszkan.size() + 3  , 1);
         kontener.setLayout(rozklad);
 
         for(Para_p_m para : lista_mieszkan)
@@ -143,9 +153,10 @@ class Spis_Mieszkan_Swing extends JFrame implements ActionListener
         }
         kontener.add(dodaj_mieszkanie);
         kontener.add(dodaj_mieszkanie_na_pokoje);
+        kontener.add(usun_mieszkanie);
 
         okno.pack();
-        okno.setSize(300, (lista_mieszkan.size() + 2)*32 + 40);
+        okno.setSize(300, (lista_mieszkan.size() + 3)*32 + 40);
         okno.setVisible(true);
     }
 
@@ -157,26 +168,103 @@ class Spis_Mieszkan_Swing extends JFrame implements ActionListener
             new Dodaj_m_calosc_Swing(spis_mieszkan);     
             okno.dispose();
         }
-        else
+        
+        if(ktory_przycisk == dodaj_mieszkanie_na_pokoje)
         {
-            if(ktory_przycisk == dodaj_mieszkanie_na_pokoje)
+            new Dodaj_m_na_pokoje_Swing(spis_mieszkan);
+            okno.dispose();
+        }
+        
+        if(ktory_przycisk == usun_mieszkanie)
+        {
+            new Usun_mieszkanie_Swing(spis_mieszkan);
+            okno.dispose();
+        }
+        
+        for(Para_p_m para : lista_mieszkan)
+        {
+            if(ktory_przycisk == para.daj_p())
+            {   
+                // do wyświetl okno przekazujemy spis mieszkań,
+                // aby w razie modyfikacji móc go zapisać.
+                // przekazujemy rownież Spis_mieszkan_Swing 
+                // aby móc usunąć czerwone podświetlenie
+                para.daj_m().wyswietl_okno(spis_mieszkan, this);
+            }
+        }
+        sprawdz_stany();
+    }
+    
+    // funkcja odpowiadająca za czerwone podświetlenie
+    // nieopłaconych mieszkań
+    public void sprawdz_stany()
+    {
+        for(Para_p_m para : lista_mieszkan)
+        {
+            para.daj_m().sprawdz_stan();
+            if(para.daj_m().czy_opoznione == true)
             {
-                new Dodaj_m_na_pokoje_Swing(spis_mieszkan);
-                okno.dispose();
+                //lista_mieszkan.get(lista_mieszkan.size() - 1).daj_p().setBackground(Color.RED);
+                para.daj_p().setBackground(Color.RED);
             }
             else
             {
-                for(Para_p_m para : lista_mieszkan)
-                {
-                    if(ktory_przycisk == para.daj_p())
-                    {   
-                        // do wyświetl okno przekazujemy spis mieszkań,
-                        // aby w razie modyfikacji móc go zapisać.
-                        para.daj_m().wyswietl_okno(spis_mieszkan);
-                    }
-                }
+                para.daj_p().setBackground(Color.WHITE);
             }
         }
     }
+}
 
+class Usun_mieszkanie_Swing extends JFrame implements ActionListener
+{
+    Spis_Mieszkan spis_mieszkan;
+    JFrame okno;
+    JLabel nazwa_tekst;
+    JTextField nazwa;
+    JButton przycisk_usun;
+
+    Usun_mieszkanie_Swing(Spis_Mieszkan s_m)
+    {
+        okno = new JFrame("Usun mieszkanie");
+        okno.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        this.spis_mieszkan = s_m;
+
+        nazwa_tekst = new JLabel("Adres usuwanego mieszkania");
+        nazwa = new JTextField();
+        przycisk_usun = new JButton("usun");   
+        przycisk_usun.addActionListener(this);
+
+        Container kontener = okno.getContentPane();
+        GridLayout rozklad = new GridLayout(2  , 2);
+        kontener.setLayout(rozklad);
+
+        kontener.add(nazwa_tekst);
+        kontener.add(nazwa);
+        kontener.add(przycisk_usun);
+
+        okno.pack();
+        okno.setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        for(int i = 0; i < spis_mieszkan.lista_mieszkan.size(); i++)
+        {   
+            if(spis_mieszkan.lista_mieszkan.get(i).nazwa.equals(nazwa.getText()))
+            {
+                spis_mieszkan.lista_mieszkan.remove(i);
+            }
+        }
+        try
+        {
+            spis_mieszkan.zapisz_do_pliku("dane.txt");
+        }
+        catch(IOException e1)
+        {
+            System.out.println("nieudany zapis do pliku");
+        }
+        new Spis_Mieszkan_Swing(spis_mieszkan);
+        okno.dispose();
+    }
 }

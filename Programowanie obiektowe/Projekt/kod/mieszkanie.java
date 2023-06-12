@@ -1,25 +1,24 @@
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.util.Calendar;
 
 class Mieszkanie implements Serializable
 {
     String nazwa;
     String opis;
     //? dokumenty
+    boolean czy_opoznione;
+    // mieszkanie jest opóznione z zapłata jeśli nie jest opłacone
+    // i dzień rozliczenia już minął
     Spis_Mieszkan spis_mieszkan;
+    Calendar c = Calendar.getInstance();
+
 
     public Mieszkanie(String s, Spis_Mieszkan s_m)
     {
         nazwa = s;
         spis_mieszkan = s_m;
+        czy_opoznione = false;
     }
 
     public void ustaw_nazwe(String nazwa)
@@ -31,7 +30,7 @@ class Mieszkanie implements Serializable
     {
         return nazwa;
     }
-    public void wyswietl_okno(Spis_Mieszkan spis_mieszkan) {}
+    public void wyswietl_okno(Spis_Mieszkan spis_mieszkan, Spis_Mieszkan_Swing s_m) {}
 
     public void zapisz()
     {
@@ -44,5 +43,7 @@ class Mieszkanie implements Serializable
             System.out.println("nie udalo sie zapisac");
         }
     }
+
+    public void sprawdz_stan() {}
 }
 
