@@ -32,3 +32,10 @@
  * Modelling and Optimization
  * Computer Networks
  * Portuguese course :)
+
+## Semester 6
+ * Artificial Inteligence
+ * .NET Course
+ * Scala in Practice
+ * Hacking for everyone - seminar
+ * Linux System Administration Course
