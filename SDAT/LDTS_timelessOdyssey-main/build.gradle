@@ -1,0 +1,55 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'net.ltgt.errorprone' version '3.1.0'
+    id 'jacoco'
+    id 'info.solidsoft.pitest' version '1.15.0'
+}
+
+group = 'timelessodyssey'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+application {
+    mainClass.set('timelessodyssey.Game')
+}
+
+dependencies {
+    implementation 'com.googlecode.lanterna:lanterna:3.1.1'
+    errorprone "com.google.errorprone:error_prone_core:2.20.0"
+
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
+    testImplementation 'org.mockito:mockito-core:3.7.7'
+    testImplementation 'net.jqwik:jqwik:1.5.1'
+
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+compileJava {
+    options.compilerArgs << "-Werror"
+}
+
+test {
+    useJUnitPlatform {
+        includeEngines ('junit-jupiter', 'jqwik')
+    }
+    testLogging {
+        exceptionFormat = 'full'
+    }
+    finalizedBy jacocoTestReport
+}
+
+pitest {
+    junit5PluginVersion = '1.2.0'
+    pitestVersion = '1.15.0'
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+}
