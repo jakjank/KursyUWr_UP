@@ -1,0 +1,85 @@
+#lang racket
+
+; Zadanie 3
+
+(define/contract (suffixes xs)
+  (parametric->/c [a] (-> (listof a) (listof (listof a))))
+  (define (it xs acc)
+    (if (empty? xs)
+        (list acc)
+        (cons acc (it (cdr xs) (append acc (list(car xs)))))))
+  (it xs '()))
+
+
+(define (suffixes-without-contracts xs)
+  (define (it xs acc)
+    (if (empty? xs)
+        (list acc)
+        (cons acc (it (cdr xs) (append acc (list(car xs)))))))
+  (it xs '()))
+
+;(time (suffixes (range 3000))) wypisuje wynik funkcji
+
+(define (how-long f)
+  (define t1 (current-inexact-milliseconds))
+  f
+  (- (current-inexact-milliseconds) t1))
+
+;(how-long (suffixes (range 4000)))
+;(how-long (suffixes-without-contracts (range 4000)))
+
+; Zadanie 4
+
+;pozycje pozytywne - wyciagmy z pudelek (sprawdzamy czy tag sie zgadza)
+;pozycje negatywne - wkaladamy do pudelek (otagowujemy)
+;pozycja w kontrakcie jest pozytywna jesli jest parzyscie wiele
+;razy "po lewej stronie" strzalki
+
+;PRZYKLAD 1
+;(parametric->/c [a b] (-> a b a))
+;                         n^n^p^       (p^ -pozytywna) (n^ - negatywna)
+
+(define/contract (przyklad1 a b)
+  (parametric->/c [a b] (-> a b a))
+  a)
+
+;PRZYKLAD2
+;(parametric->/c [a b c] (-> (-> a b c) (-> a b) a c))
+;                               p^p^n^     p^n^ n^p^
+
+(define/contract (przyklad2 f1 f2 a)
+  (parametric->/c [a b c] (-> (-> a b c) (-> a b) a c))
+  (f1 a (f2 a)))
+;(przyklad2 (lambda (x y) "s") (lambda (x) #t) 7)
+
+;PRZYKLAD 3
+;(parametric->/c [a b c] (-> (-> b c) (-> a b) (-> a c)))
+;                               p^n^     p^n^     n^p^
+
+(define/contract (przyklad3 f1 f2)
+  (parametric->/c [a b c] (-> (-> b c) (-> a b) (-> a c)))
+  (lambda (x) (f1 (f2 x))))
+;(przyklad3 (lambda (x) "s") (lambda (x) x))
+
+;PRZYKLAD 4
+;(parametric->/c [a] (-> (-> (-> a a) a) a))
+;                               n^p^ n^ p^
+
+(define/contract (przyklad4 f)
+  (parametric->/c [a] (-> (-> (-> a a) a) a))
+  (f (lambda (x) x)))
+;(przyklad4 (lambda (x) x))
+
+
+; Zadanie 5
+
+(define (foldl-map f a xs)
+  
+   (define (it a xs ys)
+      (if (null? xs)
+          (cons (reverse ys) a)
+          (let [(p (f (car xs) a))]
+            (it (cdr p)
+                 (cdr xs)
+                 (cons (car p) ys)))))
+   (it a xs null))
