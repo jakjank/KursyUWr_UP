@@ -1,0 +1,56 @@
+#lang racket
+; z wykladu
+(define-syntax-rule
+  (stream-cons v s)
+  (cons v (delay s)))
+
+(define stream-car car)
+
+(define (stream-cdr s)
+  (force (cdr s)))
+
+(define stream-null null)
+(define stream-null? null?)
+
+(define (stream-ref s n)
+  (if (= n 0)
+      (stream-car s)
+      (stream-ref (stream-cdr s) (- n 1))))
+
+(define (stream-filter p s)
+  (if (stream-null? s)
+      stream-null
+      (if (p (stream-car s))
+          (stream-cons (stream-car s)
+                       (stream-filter p (stream-cdr s)))
+          (stream-filter p (stream-cdr s)))))
+
+(define (integers-from n)
+  (stream-cons n (integers-from (+ n 1))))
+
+(define (divides? a b)
+  (= (remainder b a) 0))
+
+; zadanie
+
+(define (is-divider n list-of-num)
+  (if (empty? list-of-num)
+      #f
+      (if (divides? (car list-of-num) n)
+          #t
+          (is-divider n (cdr list-of-num)))))
+          
+(define (not-mult s earlier-primes)
+  (if (is-divider (stream-car s) earlier-primes)
+      (not-mult (stream-cdr s) earlier-primes)
+      (stream-cons
+       (stream-car s)
+       (not-mult (stream-cdr s) (cons (stream-car s) earlier-primes)))))
+
+(define primes (not-mult (integers-from 2) '()))
+
+primes
+(stream-ref primes 1)
+(stream-ref primes 2)
+(stream-ref primes 3)
+(stream-ref primes 10)

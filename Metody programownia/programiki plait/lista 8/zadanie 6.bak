@@ -1,0 +1,11 @@
+#lang plait
+
+
+(define-type racket-abstr
+  (r-variable [var : Symbol])
+  (r-number [n : Number])
+  (r-lambda [s : String] [args : (Listof racket-abstr)] [f : racket-abstr])
+  (r-function [ f : racket-abstr] [args : (Listof racket-abstr)]) ;?
+  (r-let [s : String] [args : (Listof racket-abstr)])
+  (r-if [s : String] [condition : Boolean] [ifTrue : racket-abstr] [ifFalse : racket-abstr])
+  (t-cond [s : String] [args : Listof racket-abstr])) ;?

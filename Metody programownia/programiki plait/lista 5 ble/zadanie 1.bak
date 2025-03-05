@@ -1,0 +1,15 @@
+#lang plait
+
+; Zadanie 1
+
+(define (f1 a b)
+  b)
+
+(define (f2.1 a b)
+  c)
+(define (f2.2 a)
+  b)
+
+(define (f2 f2.1 f2.2 a)
+  c)
+

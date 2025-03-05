@@ -1,0 +1,59 @@
+#lang racket
+
+; Zadanie 4
+
+(define morse-codes '((#\a . "._") (#\b . "_...") (#\c . "_._.") (#\d . "_..")
+                      (#\e . ".") (#\f . ".._.") (#\g . "__.") (#\h . "....")
+                      (#\i . "..") (#\j . ".___") (#\k . "_._") (#\l . "._..")
+                      (#\m . "__") (#\n . "_.") (#\o . "___") (#\p . ".__.")
+                      (#\q . "__._") (#\r . "._.") (#\s . "...") (#\t . "_")
+                      (#\u . ".._") (#\v . "..._") (#\w . ".__") (#\x . "_.._")
+                      (#\y . "_.__") (#\z . "__..") (#\0 . "_____") (#\1 . ".____")
+                      (#\2 . "..___") (#\3 . "...__") (#\4 . "...._") (#\5 . ".....")
+                      (#\6 . "_....") (#\7 . "__...") (#\8 . "___..") (#\9 . "____.")
+                      (#\space . "  ") (#\. . "._._._") (#\, . "__..__")))
+
+#;(define (morse-code str)
+  (string-join
+   (map
+    (lambda (x) (cdr (assoc x morse-codes)))
+    (filter (lambda (x) (not (equal? x #\space))) (string->list (string-downcase str))))))
+; Nie zalatwia podwojnych znakow na spacjech^^^
+
+(define (morse-code str)
+  (define (it str-tab acc space?)
+    (if (empty? str-tab)
+        acc
+        (if (equal? (car str-tab) #\space)
+            (if space?
+                (it (cdr str-tab) acc #t)
+                (it (cdr str-tab) (string-append acc " ") #t))
+            (it (cdr str-tab) (string-append acc " " (cdr (assoc (car str-tab) morse-codes))) #f))))
+  (let
+      ([wynik (it (string->list (string-downcase str)) "" #f)])
+      (substring wynik 1 (string-length wynik))))
+
+;(morse-code "Metody Programowania")
+
+; Zadaie 5
+
+(define (match-morse sign)
+  (define (it sign tab)
+    (if (equal? sign (cdr (car tab)))
+        (car (car tab))
+        (it sign (cdr tab))))
+  (it sign morse-codes))
+
+(define (morse-decode str)
+  (define (it str current-sign acc space?)
+    (if (equal? (string-length str) 0)
+        (append acc (list (match-morse current-sign)))
+        (if (equal? " " (substring str 0 1))
+            (if space?
+                (it (substring str 1 (string-length str)) "" (append acc '(#\space)) #true)
+                (it (substring str 1 (string-length str)) "" (append acc (list (match-morse current-sign))) #true))
+            (it (substring str 1 (string-length str)) (string-append current-sign (substring str 0 1)) acc #f))))
+  (list->string (it str "" '() #f)))
+
+;(morse-decode "__ .__.  ..___ _____ ..___ ..___")
+;(morse-decode (morse-code "Metody Programowania 2022"))
