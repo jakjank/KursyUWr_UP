@@ -19,7 +19,7 @@ Basic options:
 - [0123456789] matches any single digit
 - [a-d] matches character in range a-d, inclusive
 - we can do [0-9A-Z]
-- ^ (caret) atches empty string at the begining; $ ... at the end
+- ^ (caret) atches empty string at the start; $ ... at the end
 A  regular expression may be followed by one of several repetition operators:
 ?      The preceding item is optional and matched at most once.
 *      The preceding item will be matched zero or more times.
