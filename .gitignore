@@ -1,1 +1,3 @@
 hakowanie_dla_kazdego
+*.bsp/*
+*.scala-build/*
