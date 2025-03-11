@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Ex4</name>
+    </assembly>
+    <members>
+        <member name="F:Ex4.Plant.maxID">
+            <summary>
+            statyczne maxID do nadawania unikalnych ID roslinom
+            </summary>
+        </member>
+        <member name="F:Ex4.Plant.ID">
+            <summary>
+            ID jednoznacznie definiujace rosline
+            </summary>
+        </member>
+        <member name="F:Ex4.Plant.species">
+            <summary>
+            gatunek rosliny
+            </summary>
+        </member>
+        <member name="F:Ex4.Plant.age">
+            <summary>
+            wiek rosliny (w dniach)
+            </summary>
+        </member>
+        <member name="F:Ex4.Plant.unwateredDays">
+            <summary>
+            ilosc dni od ostatniego podlania
+            </summary>
+        </member>
+        <member name="M:Ex4.Plant.#ctor(System.String)">
+            <summary>
+            Konstruktor dal kalsy Plant
+            </summary>
+            <param name="species"></param>
+        </member>
+        <member name="M:Ex4.Plant.water">
+            <summary>
+            Metoda dajaca znać, ze roslina zostala podlana.
+            unwateredDays = 0
+            </summary>
+        </member>
+        <member name="M:Ex4.Plant.print">
+            <summary>
+            Metoa wypisujaca dane rosliny
+            </summary>
+        </member>
+        <member name="M:Ex4.Plant.dayPasses">
+            <summary>
+            metoda imitujaca uplyw jednego dnia dla rosliny
+            </summary>
+        </member>
+        <member name="F:Ex4.Garden.plants">
+            <summary>
+            Lista roslin w ogodzie
+            </summary>
+        </member>
+        <member name="M:Ex4.Garden.addPlant(Ex4.Plant)">
+            <summary>
+            Metoda pozwalajaca dodac rosline do ogrodu
+            </summary>
+            <param name="plant"></param>
+        </member>
+        <member name="M:Ex4.Garden.plantNeedsWater(System.String)">
+            <summary>
+            metoda informujaca uzytkownika rosliny jakiego rodzaju nalezy podlac
+            </summary>
+            <param name="species"></param>
+        </member>
+        <member name="M:Ex4.Garden.rained">
+            <summary>
+            Metoda aplikujaca deszcz (podlanie wszystich roslin w ogrodzie
+            </summary>
+        </member>
+        <member name="M:Ex4.Garden.waterSpecies(System.String)">
+            <summary>
+            metoda podlawajaca rosliny konkretnego gatunku
+            </summary>
+            <param name="species"></param>
+        </member>
+        <member name="M:Ex4.Garden.dayPasses">
+            <summary>
+            Imituje uplyw dnia w ogrodzie
+            </summary>
+        </member>
+        <member name="M:Ex4.Garden.showPlants">
+            <summary>
+            Wypisuje rosliny w naszym ogrodzie
+            </summary>
+        </member>
+    </members>
+</doc>

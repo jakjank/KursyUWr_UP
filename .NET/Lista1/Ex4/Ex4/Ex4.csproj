@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>C:\Users\kubaj\OneDrive\Dokumenty\KursyUWr_UP\.NET\Lista1\Ex4\Ex4\bin\Release\net8.0\Ex4.xml</DocumentationFile>
+  </PropertyGroup>
+
+</Project>
