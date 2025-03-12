@@ -1,0 +1,22 @@
+find - search for files in a directory
+
+Example:
+find . -name "zad4.txt"
+find [starting_path] [options] [expression]
+
+options - search criteria:
+-name "exampl.txt" find files with given name
+-iname same but case insensitive
+-size +100k files bigger than 100KB (can use -)
+-mtime -7 files modified less than 7 days ago
+-type d directories
+-type f files
+
+Example (find fiels modified more than 50 days ago bigger than 500MB):
+find . -mtime +50 -size +500M
+
+expression - actions to do with found files
+-exec command {} +	Run a command on found files (efficient)
+-exec command {} \;	Run a command for each file
+-delete	                Delete found files
+

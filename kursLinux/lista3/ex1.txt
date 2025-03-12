@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# why ... | ... doesnt work?
+mapfile -t songs < <(find . -type f -iname "*.mp3")
+
+if [[ ${#songs[@]} -eq 0 ]]; then
+    echo "No MP3 files found!"
+    exit 1
+fi
+
+get_metadata() {
+    local file="$1"
+    local title=$(mp3info -p "%t" "$file")
+    local artist=$(mp3info -p "%a" "$file")
+    local album=$(mp3info -p "%l" "$file")
+    echo "$album ($artist): $title"
+}
+
+echo "Available tracks:"
+for i in "${!songs[@]}"; do
+    track_info=$(get_metadata "${songs[$i]}")
+    printf "%d) %s\n" "$((i+1))" "$track_info"
+done
+
+play_song() {
+    local index="$1"
+    local file="${songs[$index]}"
+    echo "Playing: $(get_metadata "$file")"
+    mplayer -really-quiet -nolirc "$file"
+}
+
+while true; do
+    echo -n "Choose a number to play> "
+    read -r choice
+    if [[ -z "$choice" ]]; then
+        break
+    elif [[ "$choice" =~ ^[0-9]+$ ]] && (( choice >= 1 && choice <= ${#songs[@]} )); then
+        play_song "$((choice - 1))"
+    else
+        echo "Wrong answer"
+    fi
+done
+
+echo "Goodbye!"
+
