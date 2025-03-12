@@ -1,0 +1,22 @@
+prime_filter() {
+        local first="$1"
+        #echo $@
+        shift
+        #echo $@
+        echo "$first"
+
+        if [ $# -gt 0 ]; then
+                prime_filter $(
+                         for num in "$@"; do
+                                (( num % first != 0 )) && echo "$num"
+                         done
+                )
+        fi
+}
+
+if [ $# -gt 0 ]; then
+        prime_filter $(seq 2 "$1")
+else
+        prime_filter $(seq 2 1000)
+fi
+
