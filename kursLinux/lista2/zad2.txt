@@ -1,0 +1,16 @@
+echo "alias ll='ls -lAFbhv --color=always | less -XFR'" >> ~/.bashrc
+
+Wyjasnienie:
+(man ls)
+-l wyświetla szczegóły: uprawnienia, datę modyfikacji...
+-A (almost-all) do not list implied . and .. ??
+-F dodaje znaki specjalne do nazw (/dla katalogów, * dla plików wykonywalnych...)
+-b wyświetla znaki typu \n
+-h (human readable) np. 23M zamiast bajtóœ
+-v sortuje interpretujac liczby np file1, file2, file10 zamiast file1, file10, file2
+--color=ALWAYS wymusza kolorowanie wyjscia (wymaga pagera)
+pager - umozliwa przegladanie duzych ilosci tekstu w terminalu (np. less lub more)
+uzywamy less
+-X nie czysci ekranu po zakonczeniu
+-F automatycznie wychodzi z less jesli tekst miesci sie w terminalu
+-R pozwala na wyswietlanie koloróœ
