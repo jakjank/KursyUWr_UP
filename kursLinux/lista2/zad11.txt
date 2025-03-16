@@ -1,0 +1,8 @@
+sed ':a;N;$!ba;s/\n/ /g; s/[[:space:]]\+/ /g; :!$s/\. /\.\n/g' exmpl.txt
+
+sed ':a;N;$!ba;s/\n/ /g; s/[[:space:]]\+/ /g; s/\. \([^ ]\)/.\n\1/g' exmpl.txt
+(no \n for last line)
+
+first replace \n with ' '.
+next replace multiple ' ' with just one.
+lastly replace '. ' with '.\n'
