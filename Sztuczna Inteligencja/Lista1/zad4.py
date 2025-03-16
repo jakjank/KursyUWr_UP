@@ -5,7 +5,19 @@
 # - 0s are in the [i:i+num] piece of text (we have to change them to 1s)
 # - 1s are in the [0:i] and [i+num:n] (we have to change them to 0s)
 
-# speedup by checking what goes inand out of template
+# speedup by checking what goes in and out of sliding window
+
+def opt_dist2(lst, num): #min modification for ex5
+    n = len(lst)
+    res = n
+    no_ones = lst.count(1)
+    for i in range(0,n-num+1):
+        current = lst[i:i+num]
+        no_ones_current = current.count(1)
+        cur_res = num - no_ones_current + (no_ones - no_ones_current)
+        if cur_res < res:
+            res = cur_res 
+    return res
 
 def opt_dist(lst, num):
     # print('*',lst,num)
