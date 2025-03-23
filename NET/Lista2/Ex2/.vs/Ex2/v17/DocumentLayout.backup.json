@@ -1,10 +1,10 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\kubaj\\OneDrive\\Dokumenty\\KursyUWr_UP\\.NET\\Lista2\\Ex2\\",
+  "WorkspaceRootPath": "C:\\Users\\kubaj\\OneDrive\\Dokumenty\\KursyUWr_UP\\NET\\Lista2\\Ex2\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kubaj\\OneDrive\\Dokumenty\\KursyUWr_UP\\.NET\\Lista2\\Ex2\\Ex2\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Ex2\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BE524984-A417-4799-BCDB-D4B4716F2135}|Ex2\\Ex2.csproj|c:\\users\\kubaj\\onedrive\\dokumenty\\kursyuwr_up\\net\\lista2\\ex2\\ex2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BE524984-A417-4799-BCDB-D4B4716F2135}|Ex2\\Ex2.csproj|solutionrelative:ex2\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -20,13 +20,13 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\kubaj\\OneDrive\\Dokumenty\\KursyUWr_UP\\.NET\\Lista2\\Ex2\\Ex2\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\kubaj\\OneDrive\\Dokumenty\\KursyUWr_UP\\NET\\Lista2\\Ex2\\Ex2\\Program.cs",
               "RelativeDocumentMoniker": "Ex2\\Program.cs",
-              "ToolTip": "C:\\Users\\kubaj\\OneDrive\\Dokumenty\\KursyUWr_UP\\.NET\\Lista2\\Ex2\\Ex2\\Program.cs",
+              "ToolTip": "C:\\Users\\kubaj\\OneDrive\\Dokumenty\\KursyUWr_UP\\NET\\Lista2\\Ex2\\Ex2\\Program.cs",
               "RelativeToolTip": "Ex2\\Program.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAAADEAAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAACsAAAAAAAAAAAAQwD4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-15T17:44:35.557Z",
+              "WhenOpened": "2025-03-23T22:12:06.037Z",
               "EditorCaption": ""
             }
           ]

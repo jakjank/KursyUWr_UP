@@ -3,10 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\kubaj\\OneDrive\\Dokumenty\\KursyUWr_UP\\NET\\Lista2\\Ex4\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kubaj\\OneDrive\\Dokumenty\\KursyUWr_UP\\.NET\\Lista2\\Ex4\\Ex4\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\kubaj\\OneDrive\\Dokumenty\\KursyUWr_UP\\.NET\\Lista1\\Ex5\\Ex5.2\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B8C8EEE2-D88C-4814-A587-4FC538E33E9A}|Ex4\\Ex4.csproj|c:\\users\\kubaj\\onedrive\\dokumenty\\kursyuwr_up\\net\\lista2\\ex4\\ex4\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B8C8EEE2-D88C-4814-A587-4FC538E33E9A}|Ex4\\Ex4.csproj|solutionrelative:ex4\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -16,30 +14,20 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\kubaj\\OneDrive\\Dokumenty\\KursyUWr_UP\\.NET\\Lista1\\Ex5\\Ex5.2\\Program.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\.NET\\Lista1\\Ex5\\Ex5.2\\Program.cs",
-              "ToolTip": "C:\\Users\\kubaj\\OneDrive\\Dokumenty\\KursyUWr_UP\\.NET\\Lista1\\Ex5\\Ex5.2\\Program.cs",
-              "RelativeToolTip": "..\\..\\..\\.NET\\Lista1\\Ex5\\Ex5.2\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-18T11:33:13.56Z"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\kubaj\\OneDrive\\Dokumenty\\KursyUWr_UP\\.NET\\Lista2\\Ex4\\Ex4\\Program.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\.NET\\Lista2\\Ex4\\Ex4\\Program.cs",
-              "ToolTip": "C:\\Users\\kubaj\\OneDrive\\Dokumenty\\KursyUWr_UP\\.NET\\Lista2\\Ex4\\Ex4\\Program.cs",
-              "RelativeToolTip": "..\\..\\..\\.NET\\Lista2\\Ex4\\Ex4\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\kubaj\\OneDrive\\Dokumenty\\KursyUWr_UP\\NET\\Lista2\\Ex4\\Ex4\\Program.cs",
+              "RelativeDocumentMoniker": "Ex4\\Program.cs",
+              "ToolTip": "C:\\Users\\kubaj\\OneDrive\\Dokumenty\\KursyUWr_UP\\NET\\Lista2\\Ex4\\Ex4\\Program.cs",
+              "RelativeToolTip": "Ex4\\Program.cs",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAQwFwAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-16T15:12:14.422Z"
+              "WhenOpened": "2025-03-23T22:14:13.713Z",
+              "EditorCaption": ""
             }
           ]
         }
