@@ -1,4 +1,6 @@
 hakowanie_dla_kazdego
-**/.bsp/
-**/scala-build/
-NET/
+Scala_in_Practice/*
+!Scala_in_Practice/**/*.scala
+NET/*
+!NET/**/*.cs
+**/*.exe
