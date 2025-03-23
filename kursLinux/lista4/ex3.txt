@@ -1,0 +1,3 @@
+1. dodajemy skrypt ls do lolcats z prawami do wykonania + koty :)
+2. bash uzytownika (jesli ma '.' w PATH) znajdzie definicje ls w biezacym katalogu i ja wykona.
+3. u've beeo pwned!

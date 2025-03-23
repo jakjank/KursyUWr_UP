@@ -37,7 +37,7 @@ package figures {
 
     class Point(val x : Rational, val y : Rational){
         override def toString = 
-            s"(${x}, ${y})"
+            s"($x, ${y})"
         def squaredDistance(p2: Point): Rational = 
             (x - p2.x) * (x - p2.x) + (y - p2.y) * (y - p2.y)
     }
@@ -64,10 +64,10 @@ package figures {
         val description = "Reactangle"
     }
 
-    class Square(a : Point, b : Point) extends Shape{
+    class Square(a : Point, b : Point) extends Rectangle(a,b,a,b){
         require(a.x != b.x || a.y != b.y, "Square cannot be inf. small")
-        def area = a.squaredDistance(b)
-        val description = "Square"
+        //override def area = a.squaredDistance(b)
+        override val description = "Square"
     }
 
     object ShapeFunct {

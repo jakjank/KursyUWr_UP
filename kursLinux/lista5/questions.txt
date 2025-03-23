@@ -1,0 +1,5 @@
+Why
+some_file < <(whiptail --yesno text 0 0)
+breaks the terminal, but
+some_file < <(ls)
+doesnt?
