@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# Populate the songs array
+mapfile -t songs < <(find . -type f -iname "*.mp3")
+
+# Exit if no MP3 files are found
+if [[ ${#songs[@]} -eq 0 ]]; then
+    echo "No MP3 files found!"
+    exit 1
+fi
+
+# Function to extract metadata from MP3 files
+get_metadata() {
+    local file="$1"
+    local title=$(mp3info -p "%t" "$file")
+    local artist=$(mp3info -p "%a" "$file")
+    local album=$(mp3info -p "%l" "$file")
+    echo "$album ($artist): $title"
+}
+
+# Function to play the selected song
+play_song() {
+    local index="$1"
+    local file="${songs[$index]}"
+    echo "Playing: $(get_metadata "$file")"
+    mplayer -really-quiet -nolirc "$file"
+}
+
+# Print available tracks manually before select
+echo "Available tracks:"
+for i in "${!songs[@]}"; do
+    track_info=$(get_metadata "${songs[$i]}")
+    printf "%d) %s\n" "$((i+1))" "$track_info"
+done
+
+# Configure select prompt
+PS3="Choose a number to play (or enter nothing to exit): "
+
+# Using select for input
+while true; do
+    select choice in "${songs[@]}"; do
+        if [[ -z "$choice" ]]; then
+            echo "Goodbye!"
+            exit 0
+        fi
+
+        index=$((REPLY - 1))
+        if [[ $index -ge 0 && $index -lt ${#songs[@]} ]]; then
+            play_song "$index"
+        else
+            echo "Invalid choice, please try again."
+        fi
+        break  # Exit select loop and re-prompt
+    done
+done

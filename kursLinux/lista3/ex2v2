@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# Populate the songs array
+mapfile -t songs < <(find . -type f -iname "*.mp3")
+
+# Exit if no MP3 files are found
+if [[ ${#songs[@]} -eq 0 ]]; then
+    echo "No MP3 files found!"
+    exit 1
+fi
+
+# Function to extract metadata from MP3 files
+get_metadata() {
+    local file="$1"
+    local title=$(mp3info -p "%t" "$file")
+    local artist=$(mp3info -p "%a" "$file")
+    #local album=$(mp3info -p "%l" "$file")
+    #echo "$album ($artist): $title"
+    echo $title-$artist | sed 's/ /_/g'
+}
+
+
+play_song() {
+    local index="$1"
+    local file="${songs[$index]}"
+    echo "Playing: $(get_metadata "$file")"
+    mplayer -really-quiet -nolirc "$file"
+}
+
+get_tracks() {
+    local options=()
+    for i in "${!songs[@]}"; do
+        track_info=$(get_metadata "${songs[$i]}")
+        options+=("$((i+1))" "$track_info")
+        #options+="$track_info"
+    done
+    printf "%s\n" "${options[@]}"
+}
+
+TITLE="choose a song to play:"
+while true; do
+    OPT=$(whiptail --cancel-button EXIT --ok-button "PLAY 1." --notags --title "mp3play" --menu "$TITLE" 15 50 5 \
+        $(get_tracks))
+    echo $OPT
+    EXIT_STATUS=$? 
+  
+    if [[ -z "$OPT" ]]; then #cancel button
+    	pkill mplayer
+    	break
+    else
+    	pkill mplayer
+        play_song $((OPT - 1)) &
+    fi
+done

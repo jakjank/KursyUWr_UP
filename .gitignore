@@ -1,3 +1,4 @@
 hakowanie_dla_kazdego
-*.bsp/*
-*.scala-build/*
+**/.bsp/
+**/scala-build/
+NET/*/Ex?/Ex?/

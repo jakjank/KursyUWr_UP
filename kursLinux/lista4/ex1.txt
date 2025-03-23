@@ -1,0 +1,16 @@
+why second word splitting is needed?
+
+FILES=$(ls *.txt)  # Command substitution
+for file in $FILES; do  # Word splitting happens here
+    echo "Processing $file"
+done
+(with file1.txt and file2.txt)
+
+without second word splitting FILE would be "file1.txt file2.txt"
+
+before var subst.
+files="file1.txt file2.txt file3.txt"
+rm $files
+would try to rm "file1.txt file2.txt file3.txt"
+
+before instr. subst - 1. example
