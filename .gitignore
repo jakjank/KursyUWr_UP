@@ -1,6 +1,3 @@
 hakowanie_dla_kazdego
-Scala_in_Practice/*
-!Scala_in_Practice/**/*.scala
-NET/*
+NET/
 !NET/**/*.cs
-**/*.exe
