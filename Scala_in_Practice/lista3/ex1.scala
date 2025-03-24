@@ -23,7 +23,7 @@ object Utils{
         x => f(g(x))
 
     def repeated[A, B](f: A => A, n: Int) : A => A =
-        if (n==0) f else compose(f, repeated(f, n-1))
+        if (n==1) f else compose(f, repeated(f, n-1))
         
     def curry[A, B, C](f: (A,B) => C) =
         // (x: A) => f(x,_) ok???
@@ -49,14 +49,14 @@ def main() =
 
     // println(Utils.compose((x: Int) => x.toString , (y: Int) => 3 + y)(2))
 
-    //println(Utils.repeated((x: Int) => x*2, 3)(1))
+    println(Utils.repeated((x: Int) => x*2, 3)(1))
 
-    def myFun = (a:Int,b:Int) => a+b
-    println(myFun(4,3))
+    // def myFun = (a:Int,b:Int) => a+b
+    // println(myFun(4,3))
 
-    def myFun2 = Utils.curry(myFun)
-    println(myFun2(3)(4))
+    // def myFun2 = Utils.curry(myFun)
+    // println(myFun2(3)(4))
     
-    println(Utils.uncurry(myFun2)(4, 3))
+    // println(Utils.uncurry(myFun2)(4, 3))
 
 
