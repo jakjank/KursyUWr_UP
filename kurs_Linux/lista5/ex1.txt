@@ -1,0 +1,24 @@
+czytaj - skrypt czytajacay kolejne linie
+
+Osobne deskryptory:
+kiedy dwa procesy w tle czytaja z tego samego pliku,
+to robia to niezaleznie od siebie:
+bash czytaj 1 < lines.txt &
+bash czytaj 1.6 < lines.txt &
+
+Wspoldzielony deskryptor:
+czytaja z tego miejsca gdzie ostatni skonczyl
+exec 3< lines.txt bash czytaj 1 <&3 & bash czytaj 1.6 <&3 &
+
+pisz - skrypt zapisujacy
+
+Wspoldzielony deskryptor
+exec 5> output.txt ;
+bash pisz 1 /proc/self/fd/5 < lines.txt &
+bash pisz 1.3 /proc/self/fd/5 < lines.txt &
+
+bash pisz 1 output.txt < lines.txt & 
+bash pisz 1.3 output.txt < lines.txt &
+
+nie bylo zadnej widocznej roznicy???
+ani gdy pisz >> ani > (operacje sa atomowe) 
