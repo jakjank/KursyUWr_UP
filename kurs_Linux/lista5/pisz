@@ -1,0 +1,10 @@
+#!/bin/bash
+
+time_sleep=$1
+output=$2
+
+while IFS= read -r line; do
+    echo "$line" > $output
+    #cat $output
+    sleep $time_sleep
+done
