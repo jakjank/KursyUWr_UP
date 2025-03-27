@@ -1,0 +1,24 @@
+ls - list directory contents
+
+stat - display file or file system status
+ 
+realpath - print the resolved path
+
+readlink - print resolved symbolic links or canonical file names
+
+dirname - strip last component from file name
+dirname $(realpath ex1.txt)
+/home/kuba/Desktop/Studia/kurs_Linux/lista5
+
+basename - strip directory and suffix from filenames
+basename $(realpath ex1.txt)
+ex1.txt
+
+for IMG in *.jpg
+do
+	convert $IMG $(basename $IMG .jpg).png
+done
+
+1. iterate through all .jpg files in pwd
+2. basename - strips .jpg from file name
+3. conver - converts given file to .png
