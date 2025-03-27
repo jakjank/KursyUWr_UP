@@ -1,3 +1,9 @@
+# How?
+# while solution isnt correct
+# we get index of one bad col/row
+# then we find the position which change minimizes opt_dist from ex4
+# we change this position and continue
+
 import zad4
 import random
 import copy
