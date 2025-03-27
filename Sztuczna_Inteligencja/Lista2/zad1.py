@@ -1,25 +1,32 @@
-#import zad4
+# How?
+# exactly the same idea as in list1/5
+# the only change is the modification of opt_dist funct
+# to calculate dist for many blocks
+# (passes 9/12 tests)
+
+# import zad4
 import random
 import copy
 import time
 from functools import reduce
-
+from functools import cache
 GO_RANDOM = 10
 
-def opt_dist3(seq : list[int], blocks : list[int], depth=0):
+@cache
+def opt_dist3(seq : list[int], blocks : list[int]):
     n = len(seq)
     res =  n
     
     if len(blocks) == 0:
         return seq.count(1)
     
-    for i in range(n - max(reduce(lambda acc,x: acc+x+1, blocks, 0)-2, 0)):
-        cur_res = seq[0 : i].count(1)
-        cur_res += seq[i : i+blocks[0]].count(0)
+    last_pos_index = n - sum(blocks) - len(blocks) + 2
+    
+    for i in range(last_pos_index):
+        cur_res = sum(seq[0 : i]) + blocks[0] - sum(seq[i : i+blocks[0]])
         if i+blocks[0] < n:
             cur_res += seq[i+blocks[0]] # we need one zero between blocks
-        cur_res += opt_dist3(seq[i+blocks[0]+1:], blocks[1:], depth+1)
-        
+        cur_res += opt_dist3(tuple(seq[i+blocks[0]+1:]), tuple(blocks[1:]))
         res = min(res, cur_res)
 
     return res
@@ -27,12 +34,12 @@ def opt_dist3(seq : list[int], blocks : list[int], depth=0):
 def check_result(result, lines): 
     index = 0
     for row in result:
-        if opt_dist3(row, lines[index]) != 0:
+        if opt_dist3(tuple(row), tuple(lines[index])) != 0:
             return False
         index += 1
 
     for col in zip(*result):
-        if opt_dist3(col, lines[index]) != 0:
+        if opt_dist3(tuple(col), tuple(lines[index])) != 0:
             return False
         index += 1
     return True
@@ -52,7 +59,7 @@ def print_result(result, iteration=-1, *lines):
                 else:
                     print('.',end="")
             #print(result[k],lines[0][k],'\n',lines)
-            print("->", opt_dist3(result[k],lines[0][k]))
+            print("->", opt_dist3(tuple(result[k]),tuple(lines[0][k])))
             k+=1
         print()
     else:
@@ -70,31 +77,36 @@ def print_result(result, iteration=-1, *lines):
 def get_bad_rows(result, lines): #check
     bad_rows = []
     for i in range(len(result)):
-        if opt_dist3(result[i],lines[i]) != 0:
+        if opt_dist3(tuple(result[i]),tuple(lines[i])) != 0:
             bad_rows.append(i)
     return bad_rows
 
 def get_bad_cols(result, lines): #check
     bad_cols = []
     for i in range(len(result[0])):
-        if opt_dist3([result[j][i] for j in range(len(result))], lines[len(result) + i]):
+        if opt_dist3(tuple([result[j][i] for j in range(len(result))]), tuple(lines[len(result) + i])):
             bad_cols.append(i)
     return bad_cols
 
 def get_best_index(result, lines, row_id, row_desc):
+    res = []
     best_change = 0
     best_id = 0
-    row_dist = opt_dist3(result[row_id], row_desc)
+    row_dist = opt_dist3(tuple(result[row_id]), tuple(row_desc))
     for i in range(len(result[0])):
-        dist_before = opt_dist3([result[j][i] for j in range(len(result))], lines[i])
+        dist_before = opt_dist3(tuple([result[j][i] for j in range(len(result))]), tuple(lines[i]))
         result[row_id][i] = (result[row_id][i] + 1) % 2
-        dist_after = opt_dist3([result[j][i] for j in range(len(result))], lines[i])
-        dist_after += opt_dist3(result[row_id], row_desc)
+        dist_after = opt_dist3(tuple([result[j][i] for j in range(len(result))]), tuple(lines[i]))
+        #dist_after += opt_dist3(result[row_id], row_desc)
         result[row_id][i] = (result[row_id][i] + 1) % 2
-        if dist_before + row_dist - dist_after > best_change:
+        if dist_before - dist_after == best_change:
+            res.append(i)
+        if dist_before - dist_after > best_change: #dist_before + row_dist - dist_after > best_change:
             best_change = dist_before - dist_after
-            best_id = i
-    return best_id
+            res = []
+            res.append(i)
+
+    return res
 
 def change_pos(result,x,y):
     result[x][y] = (result[x][y] + 1) % 2
@@ -113,14 +125,20 @@ def solve(dimX, dimY, lines):
                 if len(bad_rows) == 0:
                     continue
                 row_index = random.choice(bad_rows)
-                id = get_best_index(result, lines[len(result):], row_index, lines[row_index])
+                options = get_best_index(result, lines[len(result):], row_index, lines[row_index])
+                if len(options) == 0:
+                    continue
+                id = random.choice(options)
                 change_pos(result, row_index, id)
             else:
                 bad_cols = get_bad_cols(result,lines)
                 if len(bad_cols) == 0:
                     continue
                 col_index = random.choice(bad_cols)
-                id = get_best_index([list(row) for row in zip(*result)], lines[0:len(result)], col_index, lines[len(result) + col_index - 1])
+                options = get_best_index([list(row) for row in zip(*result)], lines[0:len(result)], col_index, lines[len(result) + col_index - 1])
+                if len(options) == 0:
+                    continue
+                id = random.choice(options)
                 change_pos(result, id, col_index)
         else:
             row = random.randint(0,len(result)-1)
