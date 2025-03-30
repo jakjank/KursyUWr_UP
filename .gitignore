@@ -1,6 +1,23 @@
 hakowanie_dla_kazdego
-NET/
-!NET/**/*.cs
+*Help/
+*.user
+*.shfbproj
+*.csproj
+*obj/
+*bin/
+*binaries*
+*.sln
+*.vs/
+*Attributes.cs
+*Info.cs
+*.g.cs
+*.dll
+*.exe
+*.pdb
+*.obj
+*.bin
+*.cache
+*.log
 
 Scala_in_Practice/**/.bsp/
 Scala_in_Practice/**/.scala-build/
