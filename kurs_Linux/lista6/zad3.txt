@@ -1,0 +1,23 @@
+tryby dostepu (rwx) dla katalogow:
+-r (read) mozliwosc odczytania listy plikow w katalogu,
+-w (write) mozliwosc tworzenia, usuwania u zmiany NAZW plików (jesli mamy x),
+-x (execute) moziwosc wejscia do katalogu 
+
+Jakie prawa do katalogu należy ustawić, żeby użytkownik mógł założyć
+własny plik w tym katalogu, ale nie mógł wylistować zawartości tego katalogu?
+ -wx
+
+Sticky bit: (chmod +t dir/file)
+ Katalogi:
+  tylko wlasciciel pliku moze go usunac
+ Pliki:
+  plik zostanie zachowany w pamieci aby przyspieszyc jego ponowne wykonanie
+  (nieuzywane)
+
+bit ustawienia grupy: (chmod g+s dir)
+ Katalogi:
+  wszystkie nowe pliki i kataologi maja taka sama grupe jak katalog . 
+ Pliki:
+  kazdy kto uruchomi plik uruchomi go z uprawnieniami grupy wlasciciela pliku
+
+
