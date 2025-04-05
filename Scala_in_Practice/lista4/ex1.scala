@@ -1,6 +1,6 @@
 import deck._
 import games._
-import games._
+import cards._
 
 @main
 def main =
@@ -16,12 +16,12 @@ def main =
     println(mydeck)
     println(s"is standard? ${mydeck.isStandard}")
 
-    mydeck = mydeck.push("diamond", 13)
+    mydeck = mydeck.push(Diamonds, King)
     println(mydeck)
 
-    println(s"amount of 'diamond's = ${mydeck.amountOfColor("diamond")}")
-    println(s"amount of 'King's = ${mydeck.amountOfFace("King")}")
-    println(s"amount of 7s = ${mydeck.amountOfNumerical(7)}")
+    println(s"amount of 'diamond's = ${mydeck.amountOfColor(Diamonds)}")
+    println(s"amount of 'King's = ${mydeck.amountOfFace(King)}")
+    println(s"amount of 7s = ${mydeck.amountOfNumerical(Numerical(7))}")
     println(s"amount with nums = ${mydeck.amountWithNumerical}")
     println(s"amount with faces = ${mydeck.amountWithFace}")
 
