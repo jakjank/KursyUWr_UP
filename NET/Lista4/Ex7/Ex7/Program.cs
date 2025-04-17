@@ -8,7 +8,7 @@ public class Program
 
         // nie mozemy jawnie okreslic czegos w stylu: List <{ string, int }>
         var theList = new [] {item}.ToList();
-        //theList.Add(new { el1 = "value:", el2 = 10 });
+        // theList.Add(new { el1 = "value:", el2 = 10 });
 
         theList.Add(new { Field1 = "value:", Field2 = 10 });
 
