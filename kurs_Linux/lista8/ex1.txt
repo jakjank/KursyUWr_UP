@@ -1,0 +1,29 @@
+1. po exit okular został dzickiem systemd (pid 1)
+2. po zamknieciu termianala X okular zniknał, bo X jest 'brutalnym' zamknieciem terminala
+3. disown odłącza ostatni proces od terminala, zatem zamkniecie termianala nie zabije tego procesu.
+4. disown -h proces zostaje na liscie jobs, ale nie dostanie SIGHUP
+5. ????
+6. 
+7. 
+
+SIGHUP
+Jeśli nie powiedziane inaczej (shopt -s huponexit, disown, disown -h)
+i klasyczne przetwazanie sygnałów (signal(SIGHUP, handler-func)),
+to jeśli proces otrzyma SIGHUP to się terminuje.
+huponexit jest ignorowany w 'normalnym' shell-u (nie login)
+
+SIGINT (Ctrl+C)
+jest wysyłany do procesu przez kontrolujący terminal,
+jeśli użytkownik chce go przerwać. W odróżniniu od SIGKILL może być złapany,
+co umożliwaia procesowi przeprowadzenie 'ładnej' samoterminacji.
+
+disown
+Usuwa jobs z aktualnego shell-a.
+-a all
+-h zaznacza job aby nie wysyłać SIGHUP przy zakończeniu
+-r usuwa tylko running jobs
+
+&! w zsh = run in bckgrd + disown
+
+
+

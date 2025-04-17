@@ -1,0 +1,37 @@
+1. Dodać Jan Testowy <jantest>
+$ sudo adduser jantest
+
+2. Dodac jan Testowy do grup
+(wyswietlani grup usera "groups <user>")
+(istniejace grupy "getent group")
+$ sudo usermod -aG audio,bluetooth <login>
+
+3. Jan Testowy woła ip jako root
+$ sudo visudo
+dodac:
+jantest ALL=(ALL) NOPASSWD: /usr/sbin/ip
+
+4. nowa grupa dla opis.txt
+$ sudo groupadd projekt
+$ sudo usermod -aG projekt jantest
+$ sudo usermod -aG projekt kuba
+$ sudo chown :projekt opis.txt (własność na opis.txt dla grupy projekt)
+$ sudo chmod 070 opis.txt
+
+5. moje a jana grupy
+$ groups jantest
+$ groups kuba
+
+6. whoami jako kuba
+sudo usermod -aG sudo jantest
+sudo -u kuba whoami
+???
+
+7. Jan zmienia imie
+chfn ????
+
+8. zmien GECOS (login, mail, name ...)
+(zobacz GECOS "finger <login>")
+chfn ??????
+
+
