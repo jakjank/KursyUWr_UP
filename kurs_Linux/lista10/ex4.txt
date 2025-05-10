@@ -1,0 +1,6 @@
+mamy initramfs ze zlinkowanymi omendami z busybox-a oraz prosty dkrypt init montujący pare rzeczy
+
+Uruchamiamy skrypt używając qemu:
+sudo qemu-system-x86_64 -m 1024 -kernel /boot/vmlinuz-6.8.0-59-generic -initrd ~/initramfs.cpio -append "console=ttyS0" -nographic
+1GB pamięci, kernel z mojej maszyny, zarchwizowany initramfs, uzywamy urądzenia ttyS0 jako głównej konsoli systemowej sam terminal
+

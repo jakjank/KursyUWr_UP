@@ -1,0 +1,7 @@
+mamy jednostke mystat.service w /etc/systemd/system
+wywołującą skrypt mystat w /usr/local/bin.
+mystat zapisuje do var/log/mystat/load.log obciążenie systemu (odczytane z /proc/loadavg)
+
+mystat-grap.timer raz dziennie woła mystat-graph.service,
+który z kolei woła mystat-grap.sh.
+Ten skrypt odczytuje dane z load.log i tworzy wykres w /var/lib/mystat/load-DATE.png
