@@ -20,6 +20,8 @@ hakowanie_dla_kazdego
 *.cache
 *.log
 
+__pycache__/
+
 Scala_in_Practice/**/.bsp/
 Scala_in_Practice/**/.scala-build/
 
