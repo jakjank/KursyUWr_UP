@@ -10,7 +10,7 @@ import copy
 import time
 from functools import reduce
 from functools import cache
-GO_RANDOM = 10
+GO_RANDOM = 2
 
 @cache
 def opt_dist3(seq : list[int], blocks : list[int]):
@@ -166,23 +166,6 @@ def read(input, output):
                 else:
                     f.write('.')
             f.write('\n')
-
-def test_opt_dist3():
-    cases = [
-        ([1,1,1,1,1], [2,2], 1),
-        ([0,0,0,1,1,1], [4], 1),
-        ([0,0,0,0,0,0], [1,2,1], 4),
-        ([1,1,1,1,1,1], [1,2,1], 2),
-        ([1,1,1,0,1,1], [3,2], 0),
-        ([1,1,1,0,1,1], [2,3], 2),
-        ([0,1,1,0,0,1,1,1,1,0], [4,5], 3),
-        ([0,1,1,1,0,0,1,1,1,0], [3,3], 0),
-        ([0,1,1,1,1,1,1,1,1,0], [3,3], 2),
-        ([1,1,1,1,0,1,1,1,1,0], [3,3], 2),
-        ([0,0,1,1,1,1,0,1,0,0], [10], 5)
-    ]
-    for el in cases:
-        print(opt_dist3(el[0],el[1]), opt_dist3(el[0],el[1])==el[2])
 
 if __name__ == "__main__":
     read("zad_input.txt", "zad_output.txt")
