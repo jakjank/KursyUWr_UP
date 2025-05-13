@@ -19,7 +19,7 @@ WEIGHTS = [
 class ReversiAgent2(Agent):
     def __init__(self, color):
         self.color = color
-        self.opponent = 'W' if color == 'B' else 'B'
+        self.opponent = WHITE if color == BLACK else BLACK
 
     def make_move(self, board):
         legal_moves = board.get_possible_moves(self.get_me())
@@ -32,7 +32,7 @@ class ReversiAgent2(Agent):
             
         empty = board.empty_fields()
         
-        if empty > 15:
+        if empty > 8:
             return self.one_step_eval(board)
 
         else:
@@ -58,6 +58,7 @@ class ReversiAgent2(Agent):
         return best_move
 
     def minimax_decision(self, board, depth):
+        # print('-----------', depth)
         best_score = -math.inf
         best_move = None
         for move in board.get_possible_moves(self.color):
@@ -70,9 +71,12 @@ class ReversiAgent2(Agent):
         return best_move
 
     def minimax(self, board, depth, maximizing_player):
+        # print("minimax", depth)
+        # print('color:', self.color if maximizing_player else self.opponent)
+        # print("pos moves: ",board.get_possible_moves(self.color if maximizing_player else self.opponent)) 
         if depth == 0 or board.get_possible_moves(self.color if maximizing_player else self.opponent) == []:
             return self.evaluate(board)
-
+        
         player = self.get_me() if maximizing_player else self.get_opponent()
         
         moves = board.get_possible_moves(player)
