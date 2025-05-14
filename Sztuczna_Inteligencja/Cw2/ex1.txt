@@ -1,0 +1,17 @@
+a) local beam search dla k = 1
+normalny hill climbing. Dla stanu wybieramy najlepszy nastepnik sposrod wszystkich.
+
+b) local beam search z jednym początkowym stanem i bez limitu na liczbę zachowanych stanów po generacji następnika,
+BFS/DFS, przeszukujemy wszystkie stany.
+
+c) symulowane wyżarzanie z T = 0 przez cały czas działania algorytmu,
+nie akceptujemy pogorszenia (p = e^-inf = 0), czyli wybieramy pierwszy nastepnik polepszajacy nasz stan (first choice hill climbing).
+
+d) symulowane wyżarzanie z T = ∞ przez cały czas działania algorytmu
+(p = e^0 = 1) czyli  zaakceptujemy kazdy nastepnik, random walk.
+
+e) algorytm genetyczny z populacją wielkości 1.
+nie ma krzyzowanie -> (czy mozemy z jednego osobnika dostac kilku 
+mutantów wjednej turze? zakładam ze nie) same mutacje -> 
+mamy pseudorozwiazanie, losowo je przeksztalcamy i jesli doastaniemy 
+lepszego osobnika to podmieniamy, lub nie wpp.
