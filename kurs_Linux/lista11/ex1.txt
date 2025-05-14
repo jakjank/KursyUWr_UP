@@ -1,0 +1,105 @@
+$ truncate --size=$((976580000*512))
+$ sudo fdisk /dev/loop47 - nie pozwolilo na start w 63 sektorze
+
+$ sudo fdisk -c=dos -u=sectors /dev/loop47 
+Welcome to fdisk (util-linux 2.39.3).
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+Device does not contain a recognized partition table.
+DOS-compatible mode is deprecated.
+Command (m for help): o
+DOS-compatible mode is deprecated.
+
+Created a new DOS (MBR) disklabel with disk identifier 0xa06988e2.
+
+Command (m for help): n
+Select (default p): p (p - primary , e -extended)
+Partition number (1-4, default 1): 1
+First sector (63-976579999, default 63): 63
+Last sector, +/-sectors or +/-size{K,M,G,T,P} (63-976579999, default 976579999): 67108863
+Created a new partition 1 of type 'Linux' and of size 32 GiB.
+
+Command (m for help): t
+Selected partition 1
+Hex code or alias (type L to list all): L
+
+00 Empty            27 Hidden NTFS Win  82 Linux swap / So  c1 DRDOS/sec (FAT-
+01 FAT12            39 Plan 9           83 Linux            c4 DRDOS/sec (FAT-
+02 XENIX root       3c PartitionMagic   84 OS/2 hidden or   c6 DRDOS/sec (FAT-
+03 XENIX usr        40 Venix 80286      85 Linux extended   c7 Syrinx         
+04 FAT16 <32M       41 PPC PReP Boot    86 NTFS volume set  da Non-FS data    
+05 Extended         42 SFS              87 NTFS volume set  db CP/M / CTOS / .
+06 FAT16            4d QNX4.x           88 Linux plaintext  de Dell Utility   
+07 HPFS/NTFS/exFAT  4e QNX4.x 2nd part  8e Linux LVM        df BootIt         
+08 AIX              4f QNX4.x 3rd part  93 Amoeba           e1 DOS access     
+09 AIX bootable     50 OnTrack DM       94 Amoeba BBT       e3 DOS R/O        
+0a OS/2 Boot Manag  51 OnTrack DM6 Aux  9f BSD/OS           e4 SpeedStor      
+0b W95 FAT32        52 CP/M             a0 IBM Thinkpad hi  ea Linux extended 
+0c W95 FAT32 (LBA)  53 OnTrack DM6 Aux  a5 FreeBSD          eb BeOS fs        
+0e W95 FAT16 (LBA) 
+...
+Hex code or alias (type L to list all): 0c
+Changed type of partition 'FAT12' to 'W95 FAT32 (LBA)'.
+
+Command (m for help): n
+Partition type
+Select (default p): 
+Using default response p.
+Partition number (2-4, default 2): 2
+First sector (67108864-976579999, default 67108864): 67108864
+Last sector, +/-sectors or +/-size{K,M,G,T,P} (67108864-976579999, default 976579999): 486539263
+Created a new partition 2 of type 'Linux' and of size 200 GiB.
+
+Command (m for help): n
+Partition type
+Select (default p): e
+Partition number (3,4, default 3): 4
+First sector (486539264-976579999, default 486539264): 629145600
+Last sector, +/-sectors or +/-size{K,M,G,T,P} (629145600-976579999, default 976579999): 976579999
+Created a new partition 4 of type 'Extended' and of size 165,7 GiB.
+
+Command (m for help): n
+Partition type
+   p   primary (2 primary, 1 extended, 1 free)
+   l   logical (numbered from 5)
+Select (default p): l
+First sector (629145663-976579999, default 629145663): 629147648
+Last sector, +/-sectors or +/-size{K,M,G,T,P} (629147648-976579999, default 976579999): 713033727
+Created a new partition 5 of type 'Linux' and of size 40 GiB.
+
+Command (m for help): n
+Select (default p): l
+Adding logical partition 6
+First sector (629145663-976579999, default 629145663): 975175680
+Last sector, +/-sectors or +/-size{K,M,G,T,P} (975175680-976579999, default 976579999): 976199679
+Created a new partition 6 of type 'Linux' and of size 500 MiB.
+
+Command (m for help): t
+Partition number (1,2,4-6, default 6): 6
+Hex code or alias (type L to list all): 82
+Changed type of partition 'Linux' to 'Linux swap / Solaris'.
+
+
+$ sudo fdisk -l disk.img 
+Disk disk.img: 465,67 GiB, 500008960000 bytes, 976580000 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x60779b95
+
+Device     Boot     Start       End   Sectors   Size Id Type
+disk.img1              63  67108863  67108801    32G  c W95 FAT32 (LBA)
+disk.img2        67108864 486539263 419430400   200G 83 Linux
+disk.img4       629145600 976579999 347434400 165,7G  5 Extended
+disk.img5       629147648 713033727  83886080    40G 83 Linux
+disk.img6       975175680 976199679   1024000   500M 82 Linux swap / Solaris
+
+losetup - set up and control loop devices
+$ sudo losetup --find --show --partscan disk.img 
+/dev/loop17
+--find – znajduje pierwsze wolne urządzenie loop
+--partscan – wymusza skanowanie partycji
+--show – wyświetla nazwę przypisanego urządzenia
+
+$ lsblk
