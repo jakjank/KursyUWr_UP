@@ -1,0 +1,13 @@
+pentago - heurystyka
+
+długie linie git 
+
+a dlugie w jednym kwadracie jeszce lepiej?
+
+5 w linii (wygrana)	+∞ (lub +1000)	-∞ (lub -1000)
+4 w linii + wolne	+100	-100
+3 w linii + 2 wolne	+30	-30
+2 w linii + 3 wolne	+5	-5
+1 w linii + 4 wolne	+1	-1
+
+
