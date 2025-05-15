@@ -1,0 +1,14 @@
+a) algorytmów ewolucyjnych i hill climbing
+zostawiamy tylko osobniki lepsze od poprzednich
+
+b) A∗ oraz local beam search
+do wyliczenia k najlepszych nastepnikow w LBS uzywamy A* 
+(dodajemy jakas heurystyke ile im moze brakowac do stanu finalnego)
+
+c) symulowanego wyżarzania i algorytmów ewolucyjnych (inaczej niż w podpunkcie a, z symulowanego
+wyżarzania powinniśmy wziąć jedynie ogólną ideę),
+Im mamy lepsze osobniki w AE (dalej w las, nizsza temperatura) tym mniej/delikatniej mutujemy osobnik,
+bo prawdopodobnie sa juz blisko optymalnego rozwiazania
+
+d) taboo search z algorytmami ewolucyjnymi.
+po prostu na starcie odrzucamy powstałe osobniki ktore kiedys/niedawno juz mielismy w populacji
