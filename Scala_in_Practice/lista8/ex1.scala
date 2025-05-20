@@ -1,4 +1,5 @@
 //> using dep "com.restfb:restfb:2025.10.0"
+
 import scala.io.Source
 import scala.concurrent.{Future, Await}
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -8,8 +9,6 @@ import com.restfb.types.User
 import java.io.{FileWriter, PrintWriter}
 import java.time.LocalDateTime
 import secrets._
-
-val tokenPath = "../secrets/fb_token.txt"
 
 object FacebookAdapter {
     private val myAppSecret = secrets.appSecret
@@ -22,9 +21,9 @@ object FacebookAdapter {
 
     def getUser(accessToken: String, id: String): Future[User] = 
         Future {
-        val client = new MyFacebookClient(accessToken)
-        val user = client.fetchObject(id, classOf[User])
-        user
+            val client = new MyFacebookClient(accessToken)
+            val user = client.fetchObject(id, classOf[User])
+            user
     }
 
     def printToFile(logFile: String, user1: String, user2: String): Future[Unit] = 
@@ -39,7 +38,7 @@ object FacebookAdapter {
 
         val user1F = getUser(token, user1)
         val user2F = getUser(token, user2)
-        printToFile(logFile, user1, user2)
+        val ptf = printToFile(logFile, user1, user2)
 
         val result = for {
             u1 <- user1F
@@ -51,7 +50,7 @@ object FacebookAdapter {
             println(s"$user1 likes: $likes1 vs.\n$user2 likes: $likes2")
         }
 
-        val resultF = Await.result(result, 10.seconds)
+        val resultF = Await.result(result zip ptf, 10.seconds)
     }
 }
 
