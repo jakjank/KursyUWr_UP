@@ -214,19 +214,19 @@ class Board:
         for (y,x) in self.BIGS:
             if 0 <= x < 7 and 0 <= y < 9:
                 board[y][x] = ANIMALS[i]
-                i += 1
+            i += 1
         i = 0
         for (y,x) in self.SMALLS:
             if 0 <= x < 7 and 0 <= y < 9:
                 board[y][x] = ANIMALS[i].lower()
-                i += 1
+            i += 1
         for row in board:
             for el in row:
                 print(el,end="")
             print()
         print()
 
-    def move(self, old_pos, new_pos, player):
+    def move(self, old_pos, new_pos, player, ask_fag=False):
         if old_pos in self.players_board(player):
             index = self.players_board(player).index(old_pos)
             self.players_board(player)[index] = new_pos
@@ -234,10 +234,22 @@ class Board:
             print("BIG ERROR")
             print("no", old_pos, "in", self.players_board(player))
         if new_pos in self.ops_board(player):
+            if(ask_fag):
+                # input(f"bicie {old_pos} na {new_pos}")
+                print("BICIE!")
+                print(self.BIGS)
+                print(self.SMALLS)
             index = self.ops_board(player).index(new_pos)
             self.ops_board(player)[index] = (-1,-1)
+            if(ask_fag):
+                print("zmienilo sie na:")
+                print(self.BIGS)
+                print(self.SMALLS)
+                # input("wznow")
 
-    def win(self):
+    def win(self, print_flag=False):
+        if(print_flag):
+            print("win checking in function")
         if (0,3) in self.BIGS:
             print("wszedlo do siebie")
             return True,-1
