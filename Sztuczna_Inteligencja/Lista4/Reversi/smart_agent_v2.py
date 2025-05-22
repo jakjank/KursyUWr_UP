@@ -100,12 +100,29 @@ class ReversiAgent2(Agent):
                 min_eval = min(min_eval, eval)
             return min_eval
 
+    def get_weight(self,y,x,board):
+        if (y,x) in [(0,1),(1,0)] and board.board[0][0] == self.get_me():
+            # print("lu")
+            return 70
+        if (y,x) in [(0,6),(1,7)] and board.board[0][0] == self.get_me():
+            # print("ru")
+            return 70
+        if (y,x) in [(6,0),(7,1)] and board.board[0][0] == self.get_me():
+            # print("ld")
+            return 70
+        if (y,x) in [(6,7),(7,6)] and board.board[0][0] == self.get_me():
+            # print("rd")
+            return 70
+        return WEIGHTS[y][x]
+
+
+
     def evaluate(self, board):
         score = 0
         for y in range(8):
             for x in range(8):
                 if board.board[y][x] == self.get_me():
-                    score += WEIGHTS[y][x]
+                    score += self.get_weight(y,x,board)
                 elif board.board[y][x] == self.get_opponent():
                     score -= WEIGHTS[y][x]
         return score
@@ -115,5 +132,5 @@ class ReversiAgent2(Agent):
         for y in range(8):
             for x in range(8):
                 if board.board[y][x] == self.get_me():
-                    score += WEIGHTS[y][x]
+                    score += self.get_weight(y,x,board)
         return score
