@@ -1,9 +1,9 @@
 from mc_agent import *
-from random_agent import *
+from forward_agent import *
 from board import *
 import time
 
-NO_GAMES = 1
+NO_GAMES = 10
 
 a1_won = 0
 a2_won = 0
@@ -13,7 +13,7 @@ draws = 0
 for i in range(NO_GAMES):
     board = Board()
     a1 = mc_agent(BIG)
-    a2 = random_agent(SMALL)
+    a2 = forward_agent(SMALL)
     player = SMALL
     length = 0
 

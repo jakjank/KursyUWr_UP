@@ -1,16 +1,17 @@
 from board import *
 import copy
 from random_game import *
+import heapq
 
 NO_RANDOM_GAMES = 1
-NO_MOVES_PER_CHOICE = 2_000
+NO_MOVES_PER_CHOICE = 20_000
 
 class mc_agent:
     
     def __init__(self, me):
         self.me = me
         self.simulated_moves = 0
-        self.counter= 50
+        # self.counter= 50
 
     def get_move(self, board:Board):
         print(self.simulated_moves)
@@ -21,7 +22,8 @@ class mc_agent:
         #     self.counter -= 1
         #     return random.choice(moves)
         
-        best_move = moves[0]
+        best_moves = []
+        heapq.heappush(best_moves,(1,moves[0]))
         best_win_simulated_ratio = 0
 
         for move in moves:
@@ -47,11 +49,19 @@ class mc_agent:
                 max_simulated_moves -= NO_moves
                 if who_won == self.me:
                     won_games += 1
-                
+
+            # print(f"{move}: played {played_games}, wins: {won_games} ({won_games/played_games}), mvs: {max_simulated_moves}")
+
             #print(stats)
             if won_games/played_games > best_win_simulated_ratio:
-                best_move = move
+                best_moves = []
+                heapq.heappush(best_moves, (1/played_games, move))
                 best_win_simulated_ratio = won_games/played_games
+            elif won_games/played_games == best_win_simulated_ratio:
+                heapq.heappush(best_moves, (1/played_games,move))
 
-        return best_move
+
+        # print(f"best moves: {best_moves} ({best_win_simulated_ratio})")
+        # input("...")
+        return best_moves[0][1]
         
