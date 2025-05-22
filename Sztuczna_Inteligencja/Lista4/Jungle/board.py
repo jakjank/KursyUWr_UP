@@ -2,31 +2,21 @@ import copy
 
 # board is 7x9 with superiority 
 # r < c < d < w < j < t < l < e
-# L.....T
-# .D...C.
-# R.J.W.E
-# .......
-# .......
-# .......
-# e.w.j.r 6
-# .c...d. 7
-# t.....l 8
-
-# ..#*#.. 0
-# ...#... 1
-# ....... 2
+# L.#*#.T 0
+# .D.#.C. 1
+# R.J.W.E 2
 # .~~.~~. 3
 # .~~.~~. 4 
 # .~~.~~. 5
-# ....... 6
-# ...#... 7 
-# ..#*#.. 8
+# e.w.j.r 6
+# .c.#.d. 7
+# t.#*#.l 8
 
 #players:
 BIG = 1
 SMALL = 0
-# BIGS =   [[2,0],[1,5],[1,1],[2,4],[2,2],[0,6],[0,0],[2,6]]
-# SMALLS = [[6,6],[7,1],[7,5],[6,2],[6,4],[8,0],[8,6],[6,0]]
+
+#starting positions of animals:
 SBIGS =   [(2, 0), (1, 5), (1, 1), (2, 4), (2, 2), (0, 6), (0, 0), (2, 6)]
 SSMALLS = [(6, 6), (7, 1), (7, 5), (6, 2), (6, 4), (8, 0), (8, 6), (6, 0)]
 
@@ -194,7 +184,7 @@ class Board:
         can_go = self.get_valid_neighbors(pos)
         can_go = [x for x in can_go if not self.in_my_hole(x,player)] # nie w naszej norze
         can_go = [x for x in can_go if x not in self.players_board(player)]# nie wchodzi na naszych
-        #can_go = [x for x in can_go if (x not in self.ops_board(player)[0:1] or x in TRAPS)]#nie atakuje szczura
+        can_go = [x for x in can_go if (x not in self.ops_board(player)[0:1] or x in TRAPS)]#nie atakuje szczura
         can_go = [x for x in can_go if x not in WATER]#not in water
         return [(pos[0],pos[1],y,x) for y,x in can_go]
 
@@ -226,13 +216,41 @@ class Board:
             print()
         print()
 
+    # partialy checks validity
+    def valid_move(self,old_pos,new_pos,player):
+        if 0 <= new_pos[1] < 7 and 0 <= new_pos[0] < 9 and old_pos in self.players_board(player):
+            if new_pos not in self.ops_board(player):
+                return True
+            if new_pos in TRAPS:
+                return True
+            old_index = self.players_board(player).index(old_pos)
+            new_index = self.ops_board(player).index(new_pos)
+            if old_index == 7: # elephant cant kill mice
+                if 1 <= new_index:
+                    return True
+                else:
+                    return False
+            elif old_index == 0: # mice can kill other mice and elephant
+                if 7 == new_index or 0 == new_index:
+                    return True
+                else:
+                    return False
+            else:
+                if new_index <= old_index:
+                    return True
+            return False
+        print("first if fail")
+        return False
+
     def move(self, old_pos, new_pos, player, ask_fag=False):
-        if old_pos in self.players_board(player):
+        if self.valid_move(old_pos,new_pos,player):
             index = self.players_board(player).index(old_pos)
             self.players_board(player)[index] = new_pos
         else:
             print("BIG ERROR")
-            print("no", old_pos, "in", self.players_board(player))
+            self.print_board()
+            print(old_pos, "-?>", new_pos)
+            input()
         if new_pos in self.ops_board(player):
             if(ask_fag):
                 # input(f"bicie {old_pos} na {new_pos}")
