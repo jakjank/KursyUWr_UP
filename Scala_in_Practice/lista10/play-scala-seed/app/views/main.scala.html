@@ -1,0 +1,16 @@
+@(title: String)(content: Html)
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>@title</title>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <nav>
+      <a href="@routes.HomeController.students">Students</a> |
+      <a href="@routes.HomeController.lectures">Lectures</a>
+    </nav>
+    <hr>
+    @content
+  </body>
+</html>

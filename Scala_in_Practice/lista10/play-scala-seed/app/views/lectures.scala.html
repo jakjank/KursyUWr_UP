@@ -1,0 +1,9 @@
+@(lectures: List[models.Lecture])
+@main("Lectures") {
+  <h1>All Lectures</h1>
+  <ul>
+    @for(l <- lectures) {
+      <li><a href="@routes.HomeController.lecture(l.id)">@l.name</a></li>
+    }
+  </ul>
+}
