@@ -1,0 +1,11 @@
+@(lecture: models.Lecture, students: List[models.Student])
+@main("Lecture Info") {
+  <h1>@lecture.name</h1>
+  <p>ID: @lecture.id</p>
+  <h2>Enrolled Students</h2>
+  <ul>
+    @for(s <- students) {
+      <li>@s.name</li>
+    }
+  </ul>
+}
