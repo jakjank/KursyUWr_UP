@@ -78,3 +78,9 @@ we have to add (s1 or s2 or ...) so one of sequences is fulfilled\
 (and we want only one sequence to be true (needed?))\
 if 1 is black in s1 we need to add (1 or -s1)\
 if 1 is white in s1 we need to add (-1 or -s1)
+
+# Performance
+
+examples from medium.txt and medium2.txt are solved quite fast.
+parsing hard.txt to CNF takes around 20 sec and solving using minisat takes around 60 sec.
+parsing tooHard.txt to CNF crashes my VS code.
