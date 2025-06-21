@@ -39,34 +39,8 @@ def parse_input_file(filename): #check
     col_clues = [list(map(int, line.split())) for line in lines[1 + n_rows:]]
     return n_rows, n_cols, row_clues, col_clues
 
-def generate_block_positions(length, blocks):
-    if not blocks:
-        yield [0] * length
-        return
-
-    total_blocks = sum(blocks)
-    min_spaces = len(blocks) - 1
-    free_space = length - total_blocks - min_spaces
-
-    def place_block(start_idx, block_idx, row):
-        if block_idx == len(blocks):
-            yield row
-            return
-
-        block_len = blocks[block_idx]
-        max_start = length - (sum(blocks[block_idx:]) + (len(blocks) - block_idx - 1))
-        for i in range(start_idx, max_start + 1):
-            new_row = row[:]
-            for j in range(i, i + block_len):
-                new_row[j] = 1
-            next_start = i + block_len + 1
-            yield from place_block(next_start, block_idx + 1, new_row)
-
-    yield from place_block(0, 0, [0] * length)
-
-
 def encode_line(encoder, cells, clues, prefix):
-    valid_layouts = list(get_sequences(len(cells), clues))
+    valid_layouts = get_sequences(len(cells), clues)
     layout_vars = []
 
     for idx, layout in enumerate(valid_layouts):
@@ -79,13 +53,12 @@ def encode_line(encoder, cells, clues, prefix):
             else:
                 encoder.add_clause([-layout_var, -x])
 
-    # 🔵 Wymagamy: przynajmniej jeden layout (OR)
+    # Wymagamy: przynajmniej jeden layout (OR)
     encoder.add_clause(layout_vars)
 
-    # 🔴 Wymagamy: najwyżej jeden (mutual exclusion)
+    # Wymagamy: najwyżej jeden (mutual exclusion)
     for a, b in itertools.combinations(layout_vars, 2):
         encoder.add_clause([-a, -b])
-
 
 def encode_nonogram(n_rows, n_cols, row_clues, col_clues): #check
     encoder = CNFEncoder()
