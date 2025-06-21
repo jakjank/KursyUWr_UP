@@ -1,7 +1,8 @@
 import itertools
 import pprint
+import argparse
 
-class CNFEncoder: #check
+class CNFEncoder:
     def __init__(self):
         self.var_map = {}
         self.var_counter = 1
@@ -31,7 +32,7 @@ class CNFEncoder: #check
                 if 'x' in key:
                     f.write(f"{key} {self.var_map[key]}\n")
 
-def parse_input_file(filename): #check
+def parse_input_file(filename):
     with open(filename) as f:
         lines = [line.strip() for line in f if line.strip()]
     n_rows, n_cols = map(int, lines[0].split())
@@ -53,43 +54,38 @@ def encode_line(encoder, cells, clues, prefix):
             else:
                 encoder.add_clause([-layout_var, -x])
 
-    # Wymagamy: przynajmniej jeden layout (OR)
+    # at least one layout
     encoder.add_clause(layout_vars)
 
-    # Wymagamy: najwyżej jeden (mutual exclusion)
+    # max one layout
     for a, b in itertools.combinations(layout_vars, 2):
         encoder.add_clause([-a, -b])
 
-def encode_nonogram(n_rows, n_cols, row_clues, col_clues): #check
+def encode_nonogram(n_rows, n_cols, row_clues, col_clues):
     encoder = CNFEncoder()
 
-    # Wiersze
     for i in range(n_rows):
         cells = [f"x_{i}_{j}" for j in range(n_cols)]
         encode_line(encoder, cells, row_clues[i], f"r{i}")
 
-    # Kolumny
     for j in range(n_cols):
         cells = [f"x_{i}_{j}" for i in range(n_rows)]
         encode_line(encoder, cells, col_clues[j], f"c{j}")
 
     return encoder
 
-def get_sequences(n: int, clues: list[int]): #check
+def get_sequences(n: int, clues: list[int]):
     def backtrack(pos: int, clue_idx: int, current: list[int]):
         if clue_idx == len(clues):
-            # Fill the rest with 0s if needed
             result.append(current + [0] * (n - len(current)))
             return
 
         block_len = clues[clue_idx]
 
-        # Try placing the block at all valid positions starting from 'pos'
         for start in range(pos, n - block_len + 1):
-            # Ensure there is enough space after this block
             new_seq = current + [0] * (start - len(current)) + [1] * block_len
             if len(new_seq) < n:
-                new_seq.append(0)  # Add space after block (except at the end)
+                new_seq.append(0)
             backtrack(len(new_seq), clue_idx + 1, new_seq)
 
     result = []
@@ -100,15 +96,14 @@ def get_sequences(n: int, clues: list[int]): #check
     return result
 
 if __name__ == "__main__":
-    input_file = "nonogram.txt"
-    output_file = "nonogram.cnf"
+    parser = argparse.ArgumentParser(description="Process SAT solution and variable mapping.")
+    parser.add_argument("input_file", help="Path to the cell definitions file (e.g., cells_def.txt)")
+    parser.add_argument("solution", help="Path to the SAT solver output file (e.g., solution.txt)")
+    args = parser.parse_args()
 
-    n_rows, n_cols, row_clues, col_clues = parse_input_file(input_file)
+    n_rows, n_cols, row_clues, col_clues = parse_input_file(args.input_file)
 
     encoder = encode_nonogram(n_rows, n_cols, row_clues, col_clues)
 
-    encoder.write_dimacs(output_file)
-
-    # encoder.write_definitions()
+    encoder.write_dimacs(args.solution)
     encoder.write_cells_nums("cells_def.txt")
-    # print(f"CNF zapisany do {output_file}. Liczba zmiennych: {encoder.var_counter - 1}, klauzul: {len(encoder.clauses)}")

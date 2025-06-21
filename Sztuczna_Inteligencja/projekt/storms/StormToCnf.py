@@ -1,4 +1,5 @@
 import itertools
+import argparse
 
 class CNFEncoder:
     def __init__(self):
@@ -74,26 +75,21 @@ def encode_square_requirements(encoder, n_rows, n_cols):
             encoder.add_clause([a, -b, -c, d])
 
 def encode_line_requirements(encoder, n_rows, n_cols):
-    # Rows
     for i in range(n_rows):
-        # Internal: cells j, j+1, j+2
         for j in range(n_cols - 2):
             x = encoder.get_var(f"x_{i}_{j}")
             y = encoder.get_var(f"x_{i}_{j+1}")
             z = encoder.get_var(f"x_{i}_{j+2}")
             encoder.add_clause([x, -y, z])
 
-        # Left border: implicit 0, check cells 0 and 1 (0 1 0)
         y = encoder.get_var(f"x_{i}_0")
         z = encoder.get_var(f"x_{i}_1")
-        encoder.add_clause([-y, z])  # (0 ∧ y ∧ z) ⇒ x=0 ∧ y=1 ∧ z=0 ⇒ clause: ¬y ∨ z
+        encoder.add_clause([-y, z])
 
-        # Right border: check cells n-2 and n-1, then 0 after edge
         x = encoder.get_var(f"x_{i}_{n_cols - 2}")
         y = encoder.get_var(f"x_{i}_{n_cols - 1}")
-        encoder.add_clause([x, -y])  # x ∧ y ∧ 0 ⇒ forbid ⇒ x ∨ ¬y
+        encoder.add_clause([x, -y])
 
-    # Columns
     for j in range(n_cols):
         for i in range(n_rows - 2):
             x = encoder.get_var(f"x_{i}_{j}")
@@ -138,16 +134,14 @@ def parse_input_file(filename):
     return n_rows, n_cols, row_clues, col_clues
 
 if __name__ == "__main__":
-    input_file = "storm.txt"
-    output_file = "storm.cnf"
+    parser = argparse.ArgumentParser(description="Process SAT solution and variable mapping.")
+    parser.add_argument("input_file", help="Path to the cell definitions file (e.g., cells_def.txt)")
+    parser.add_argument("solution", help="Path to the SAT solver output file (e.g., solution.txt)")
+    args = parser.parse_args()
 
-    n_rows, n_cols, row_clues, col_clues = parse_input_file(input_file)
-
-    # print(n_rows, n_cols, row_clues, col_clues)
+    n_rows, n_cols, row_clues, col_clues = parse_input_file(args.input_file)
 
     encoder = encode_storm(n_rows, n_cols, row_clues, col_clues)
 
-    encoder.write_dimacs(output_file)
-
-    # # encoder.write_definitions()
+    encoder.write_dimacs(args.solution)
     encoder.write_cells_nums("cells_def.txt")
