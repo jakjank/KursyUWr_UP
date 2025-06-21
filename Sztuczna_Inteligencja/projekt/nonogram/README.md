@@ -1,11 +1,8 @@
 # Project
 
-...
+The objective of this project was to "translate" nonogram puzzle to CNF and then to use SAT solvers to solve the initial puzzle.
 
-
-# Usage
-
-## Nonogram format
+# Nonogram format
 
 First we need to have some nonogram which we would like to solve.\
 The description of such nonogram is number of rows and columns in first row followed by description of blocks in each row and then in each column.\
@@ -28,23 +25,32 @@ one block of length 3 in 3rd column.\
 It is satisfied by following nonogram:\
 #.#\
 #.#\
-..#\
+..#
 
-## Using
+# Usage
 
-1. Nonogram to solve described in format explained above should be saved in nonogram.txt.
-2. NonogramToCnf.py should be run 'python3 NonogramToCnf.py'
-3. nonogram.cnf and cells_def.txt (used for prinitng the nonogram) files are created.
-4. SAT solver is used to solve CNF described in nonogram.cnf. For example using minisat and saving the soluion in solution.txt 'minisat nonogram.cnf solution.txt'.
-5. solution.txt contains the valuation of logical variables used in nonogram.cnf.
-6. Obtained solution can be printed by PrintNonogram.py 'python3 PrintNonogram.py'.
+Nonogram to solve described in format explained above should be saved in nonogram.txt. Then 
+> \$ python3 NonogramToCnf.py nonogram.txt nonogram.cnf
 
-## Using short
+should create nonogram.cnf and cells_def.txt (used for prinitng the nonogram). SAT solver is used to solve CNF described in nonogram.cnf. Next using minisat
+> \$ minisat nonogram.cnf solution.txt
 
-Save description in nonogram.txt, then:\
-$ python3 NonogramToCnf.py\
-$ minisat nonogram.cnf solution.txt\
-$ python3 PrintNonogram.py
+will save solution (if one exists) containing the valuation of logical variables in solution.txt. Obtained solution can be printed with 
+> \$ python3 PrintSolution.py cells_def.txt solution.txt
+
+other SAT solver may be used. For example\
+
+> \$ cadical storm.cnf | grep '^v ' | sed 's/^v //' > solution.txt
+
+There are example nonograms to solve in test_nonograms/ folder.\
+Max size of the nonogram I could transform was 20x20. For nonogram of size 25x25 the program crashed due to lack of memory. 
+
+# Using short
+
+Save description in nonogram.txt, then:
+> \$ python3 NonogramToCnf.py
+> \$ minisat nonogram.cnf solution.txt
+> \$ python3 PrintNonogram.py
 
 # Thinking (tldr)
 
@@ -78,9 +84,3 @@ we have to add (s1 or s2 or ...) so one of sequences is fulfilled\
 (and we want only one sequence to be true (needed?))\
 if 1 is black in s1 we need to add (1 or -s1) (1 or other case)\
 if 1 is white in s1 we need to add (-1 or -s1)
-
-# Performance
-
-examples from medium.txt and medium2.txt are solved quite fast.
-parsing hard.txt to CNF takes around 20 sec and solving using minisat takes around 60 sec.
-parsing tooHard.txt to CNF crashes my VS code.
