@@ -44,7 +44,7 @@ It is satisfied by following nonogram:\
 Save description in nonogram.txt, then:\
 $ python3 NonogramToCnf.py\
 $ minisat nonogram.cnf solution.txt\
-$ python3 PrintNonogram.py\
+$ python3 PrintNonogram.py
 
 # Thinking (tldr)
 
@@ -76,7 +76,7 @@ lets generate all possible sequences of 0s and 1s which are possible in this row
 lets add variables for sequences (s1, s2, ...)\
 we have to add (s1 or s2 or ...) so one of sequences is fulfilled\
 (and we want only one sequence to be true (needed?))\
-if 1 is black in s1 we need to add (1 or -s1)\
+if 1 is black in s1 we need to add (1 or -s1) (1 or other case)\
 if 1 is white in s1 we need to add (-1 or -s1)
 
 # Performance
