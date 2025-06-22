@@ -4,7 +4,7 @@ from b_agent import BAgent
 from qlearner import *
 import copy
 
-NO_GAMES = 10
+NO_GAMES = 20
 
 qLearner_won = 0
 random_won = 0
@@ -23,8 +23,9 @@ for i in range(NO_GAMES):
     length = 0
 
     while not board.win()[0]:
-        # if i > NO_GAMES-4:
-        #     board.print_board()
+        # board.print_board()
+        # print("bigs:", board.BIGS)
+        # print("smalls", board.SMALLS)
         if player == SMALL:
             move = qLearner.get_move(board)
             # print("qs move:", move)
@@ -74,7 +75,7 @@ for i in range(NO_GAMES):
     # Update Q-learner based on outcome
     #for old_board, move, p in reversed(move_history):
     qLearner.update(final_reward, move_history)
-    print(qLearner.weights)
+    # print(qLearner.weights)
 
 print("qlearner won:", qLearner_won, "\nb_agent won:", random_won)
 print("lost games:", lost_games)

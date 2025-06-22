@@ -3,7 +3,7 @@ from random_agent import RandomAgent
 from qlearner import *
 import copy
 
-NO_GAMES = 100
+NO_GAMES = 20
 
 qLearner_won = 0
 random_won = 0
@@ -71,7 +71,7 @@ for i in range(NO_GAMES):
     # Update Q-learner based on outcome
     #for old_board, move, p in reversed(move_history):
     qLearner.update(final_reward, move_history)
-    print(qLearner.weights)
+    # print(qLearner.weights)
 
 print("qlearner won:", qLearner_won, "\nrandom won:", random_won)
 print("lost games:", lost_games)

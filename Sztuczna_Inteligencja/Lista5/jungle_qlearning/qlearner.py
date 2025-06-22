@@ -50,30 +50,35 @@ class QLearner:
             "captured_piece_value": captured,
             "closest_piece_diff": closests
         }
-    def update_weights(self, features, target, prediction):
-        error = target - prediction
+    def update_weights(self, features, reward, next_features):
+        current_q = self.dot_product(features)
+        next_q = self.dot_product(next_features) if next_features is not None else 0
+        td_error = reward + self.gamma * next_q - current_q
+
+        # Q = Q + alpha * (reward + gamma * next_q - current_q) po pojedynczych featureach
         for k in self.weights:
-            self.weights[k] += self.alpha * error * features.get(k, 0.0)
-            self.weights[k] = round(self.weights[k],5)
+            self.weights[k] += self.alpha * td_error * features.get(k, 0.0)
+            self.weights[k] = round(self.weights[k], 5)
+
 
     def update(self, final_reward, move_history):
-        # reverse move history to propagate reward backwards
-        next_value = 0  # For the last move, Q(s',a') = 0
+        next_features = None  # Brak następnego stanu po ostatnim ruchu
 
         for old_board, move, p in reversed(move_history):
             if p != self.me:
-                continue  # only update our own moves
+                continue
 
             board_copy = copy.deepcopy(old_board)
             move_data = board_copy.move((move[0], move[1]), (move[2], move[3]), self.me)
             features = self.extract_features(move_data, board_copy)
 
-            prediction = self.dot_product(features)
-            target =  final_reward if next_value == 0 else min(10, max(-10, self.gamma * next_value))
+            # reward to final_reward tylko dla ostatniego kroku
+            reward = final_reward if next_features is None else 0  
 
-            self.update_weights(features, target, prediction)
+            self.update_weights(features, reward, next_features)
 
-            next_value = prediction
+            next_features = features  # dla poprzedniego kroku to będzie następny stan
+
 
 
     def get_move(self, board : Board):

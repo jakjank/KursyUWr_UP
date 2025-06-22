@@ -1,4 +1,5 @@
 import copy
+import time
 
 # board is 7x9 with superiority 
 # r < c < d < w < j < t < l < e
@@ -245,6 +246,7 @@ class Board:
         return False
 
     def move(self, old_pos, new_pos, player, ask_fag=False):
+        # self.print_board()
         if self.valid_move(old_pos,new_pos,player):
             index = self.players_board(player).index(old_pos)
             self.players_board(player)[index] = new_pos
@@ -254,18 +256,8 @@ class Board:
             print(old_pos, "-?>", new_pos)
             input()
         if new_pos in self.ops_board(player):
-            # if(ask_fag):
-            #     # input(f"bicie {old_pos} na {new_pos}")
-            #     print("BICIE!")
-            #     print(self.BIGS)
-            #     print(self.SMALLS)
             index = self.ops_board(player).index(new_pos)
             self.ops_board(player)[index] = (-1,-1)
-            # if(ask_fag):
-            #     print("zmienilo sie na:")
-            #     print(self.BIGS)
-            #     print(self.SMALLS)
-            #     # input("wznow")
         return {
             "player" : player,
             "start" : old_pos,
