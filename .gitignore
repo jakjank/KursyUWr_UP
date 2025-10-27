@@ -1,3 +1,5 @@
+*.ipynb_checkpoints/
+*.csv
 *.class
 Uczenie_maszynowe/lista1/bank_marketing/
 Uczenie_maszynowe/lista1/iris/
