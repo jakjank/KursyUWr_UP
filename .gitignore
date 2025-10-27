@@ -1,3 +1,7 @@
+*.bak
+*.qws
+*.qpf
+
 *.ipynb_checkpoints/
 *.csv
 *.class
