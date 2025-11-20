@@ -1,6 +1,20 @@
+*c5_pin_model_dump.txt
+*output_files/
+*simulation/
+*db/
+*incremental_dv/
+FPGA/*/simulation/
+FPGA/lista5/
+FPGA/lista4/
+FPGA/lista3/
+FPGA/mnl_avalon_spec-683091-667068.pdf
+Uczenie_maszynowe/
 *.bak
 *.qws
 *.qpf
+*.out
+*.clangd
+*.vscode
 
 *.ipynb_checkpoints/
 *.csv
